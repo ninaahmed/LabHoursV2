@@ -1,28 +1,33 @@
 <html>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
     <head>
         <title>Are you feeling blessed in this Chili's?</title>
     </head>
-    <body>
-        <form method="POST" action="">
+    <body background-color="#EDF2F7">
+        <div class="bg-white rounded-t-lg overflow-hidden border-t border-l border-r border-gray-400 p-4 px-3 py-10 bg-gray-200 flex justify-center">
+        <div class="w-full max-w-xs">
+        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="POST" action="">
             {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend class="border-botton mb-4">Go to lab hours!</legend>
-                <div class="form-group">
-                    {{ form.name.label(class="form-control-label") }}
-                    {{ form.name(class="form-control form-control-lg") }}
+                <p class="text-2xl">Go to lab hours!</p>
+                <br/>
+                <div class="mb-4">
+                    {{ form.name.label(class="block text-gray-700 text-sm font-bold mb-2") }}
+                    {{ form.name(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline") }}
                 </div>
-                <div class="form-group">
-                    {{ form.email.label(class="form-control-label") }}
-                    {{ form.email(class="form-control form-control-lg") }}
+                <div class="mb-6">
+                    {{ form.email.label(class="block text-gray-700 text-sm font-bold mb-2") }}
+                    {{ form.email(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline") }}
                 </div>
-                <div class="form-group">
-                    {{ form.eid.label(class="form-control-label") }}
-                    {{ form.eid(class="form-control form-control-lg") }}
+                <div class="mb-6">
+                    {{ form.eid.label(class="block text-gray-700 text-sm font-bold mb-2") }}
+                    {{ form.eid(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline") }}
                 </div>
-            </fieldset>
             <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
+                {{ form.submit(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline") }}
             </div>
         </form>
+    </div>
+    </div>
     </body>
 </html>

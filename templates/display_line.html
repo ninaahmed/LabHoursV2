@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>I AM feeling blessed in this Chili's!</title>
+    </head>
+    <body>
+        <div id="print_queue">
+            {% for student in queue %}
+                <div class="student">
+                    {{ student.name }}
+                </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
