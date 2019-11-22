@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block title %}Look at the line!{% endblock %}
+{% block content %}
 <html>
   <link
     href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
@@ -9,8 +12,8 @@
   </head>
   <body bgcolor="#EDF2F7">
     <p class="text-5xl mx-auto px-4">Lab Hours Queue:</p> <br/>
+    {% for student in queue %}
     <div class="container flex mx-auto px-4">
-      {% for student in queue %}
       <div class="max-w-sm w-full min-w-full lg:max-w-full lg:flex shadow-lg justify-center">
         <div class="px-6 py-4 flex-grow">
           <div class="font-bold text-xl mb-2">{{ student.name }}</div>
@@ -19,11 +22,11 @@
           </p>
         </div>
         <div class="px-6 py-4">
-          <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Finished
-          </button>
+            <button method="post"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Finished
+            </button>
           <button
             class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
           >
@@ -36,7 +39,8 @@
           </button>
         </div>
       </div>
-      {% endfor %}
     </div>
+    {% endfor %}
   </body>
 </html>
+{% endblock %}

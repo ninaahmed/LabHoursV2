@@ -14,7 +14,8 @@ def join():
     # a valid form
     if form.validate_on_submit():
         flash(f'{form.name.data} has been added to the queue!', 'success')
-        queue_handler.add_to_queue(form.name.data, form.email.data, form.eid.data)
+        queue_handler.enqueue(form.name.data, form.email.data, form.eid.data)
+        print('added someone')
         return redirect(url_for('view_line'))
 
     # render the template for submitting otherwise

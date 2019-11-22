@@ -1,8 +1,35 @@
-<html>
-    <head>
-        <title>Are you ready to feel blessed in this Chili's?</title>
-    </head>
-    <body>
-        
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <style>
+      #joinlink {
+        float: left;
+        margin: 5px;
+      }
+      #viewlink {
+        float: left;
+        margin: 5px;
+      }
+      #blockcontent {
+        clear: both;
+      }
+    </style>
+    <header>
+        <nav>
+          <ul>
+            <div class="links">
+              <li id="joinlink"><a href="{{ url_for('join') }}">Join 😎</a></li>
+              <li id="viewlink"><a href="{{ url_for('view_line') }}">View 🤡</a></li>
+            </div>
+          </ul>
+        </nav>
+    </header>
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <div id="blockcontent">
+      {% block content %}{% endblock %}
+    </div>
+  </body>
 </html>
