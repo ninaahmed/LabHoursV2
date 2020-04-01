@@ -26,15 +26,12 @@ class Notifier:
     def __init__(self, credentials_file):
         self.smtp_client = smtplib.SMTP(MAIL_SERVER, SMTP_PORT)
         self.smtp_client.starttls()
-        try:
-            with open(credentials_file) as creds:
-                self.from_addr = creds.readline()[:-1]
-                user = creds.readline()[:-1]
-                password = creds.readline()[:-1]
-                self.smtp_client.login(user, password)
-                creds.close()
-        except IOError as e:
-            raise IOError(f"Missing a credentials file named {credentials_file}")
+        with open(credentials_file) as creds:
+            self.from_addr = creds.readline()[:-1]
+            user = creds.readline()[:-1]
+            password = creds.readline()[:-1]
+            self.smtp_client.login(user, password)
+            creds.close()
 
     """
         Send an email message to the desired "to_addr".
