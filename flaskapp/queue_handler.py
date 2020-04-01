@@ -1,5 +1,5 @@
 from threading import Lock
-from student import Student
+from flaskapp.student import Student
 
 queue_lock = Lock()
 
