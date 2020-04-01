@@ -16,7 +16,7 @@ def enqueue(name, email, eid):
 	
 	#add them to the queue, return their place in line
 	student_queue.append(added_person)
-	return len(student_queue) - 1
+	return len(student_queue)
 
 def get_students():
 	return student_queue
