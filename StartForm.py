@@ -24,7 +24,7 @@ def join():
     if form.validate_on_submit():
         flash(f'{form.name.data} has been added to the queue!', 'success')
         place = queue_handler.enqueue(form.name.data, form.email.data, form.eid.data)
-        notifier.send_message(form.email.data, render_template("email_template.html", queue_pos_string=get_place_str(place)), 'html')
+        notifier.send_message(form.email.data, "Notification from Lab Hours Queue", render_template("email_template.html", queue_pos_string=get_place_str(place)), 'html')
         return redirect(url_for('view_line'))
 
     # render the template for submitting otherwise

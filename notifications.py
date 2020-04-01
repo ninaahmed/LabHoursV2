@@ -5,7 +5,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.message import EmailMessage
 
-
 # UTCS mail server
 MAIL_SERVER = "mail2.cs.utexas.edu"
 SMTP_PORT = 587
@@ -27,27 +26,30 @@ class Notifier:
         self.smtp_client = smtplib.SMTP(MAIL_SERVER, SMTP_PORT)
         self.smtp_client.starttls()
         with open(credentials_file) as creds:
+            # Cuts off the newline character at end of string
             self.from_addr = creds.readline()[:-1]
             user = creds.readline()[:-1]
             password = creds.readline()[:-1]
+            # Logs into the SMTP Server
             self.smtp_client.login(user, password)
             creds.close()
 
     """
         Send an email message to the desired "to_addr".
-        The body of the email is passed into "content"
+        The subject of the message is passed into "subject"
+        The body of the email is passed into "body"
         The type of the content (either 'html' or 'plain') is passed
           through content_type
     """
-    def send_message(self, to_addr, content, content_type):
+    def send_message(self, to_addr, subject, body, body_type):
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = "Notification from lab hours queue"
+        msg['Subject'] = subject
         msg['From'] = self.from_addr
         msg['To'] = to_addr
-        if content_type.lower() == 'html':
-            msg.attach(MIMEText(content, 'html'))
+        if body_type.lower() == 'html':
+            msg.attach(MIMEText(body, 'html'))
         else:
-            msg.attach(MIMEText(content, 'plain'))
+            msg.attach(MIMEText(body, 'plain'))
 
         self.smtp_client.send_message(msg)
 
