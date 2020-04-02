@@ -18,8 +18,8 @@ def enqueue(name, email, eid):
 def get_students():
 	return student_queue
 
-def remove(eid):
+def remove(id):
 	for i in range(0, len(student_queue)):
-		if(eid == student_queue[i].eid):
+		if(id == student_queue[i].id):
 			del student_queue[i]
 			break
