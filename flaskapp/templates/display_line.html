@@ -10,7 +10,9 @@
   <head>
     <title>Tailwind tests</title>
   </head>
-  <body bgcolor="#EDF2F7">
+  <body background-color="#EDF2F7">
+    <div class="bg-white rounded-t-lg overflow-hidden border-t border-l border-r border-gray-400 bg-gray-200">
+      <div class="w-full">
     <p class="text-5xl mx-auto px-4">Lab Hours Queue:</p> <br/>
     {% for student in queue %}
     <div class="container flex mx-auto px-4">
@@ -35,6 +37,8 @@
       </div>
     </div>
     {% endfor %}
+    </div>
+    </div>
   </body>
 </html>
 {% endblock %}
