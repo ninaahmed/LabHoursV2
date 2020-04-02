@@ -25,7 +25,12 @@
             <div class="links">
               <li id="joinlink"><a href="{{ url_for('join') }}">Join</a></li>
               <li id="viewlink"><a href="{{ url_for('view_line') }}">View</a></li>
+              {% if g.user.is_authenticated %}
+              <li id="loginlink"><a href=" {{ url_for('logout') }}"> Logout</a></li>
+              <li id="loginlink">{{g.user.first_name}}</li>
+              {% else %}
               <li id="loginlink"><a href="{{ url_for('login') }}">Login</a></li>
+              {% endif %}
             </div>
           </ul>
         </nav>

@@ -1,8 +1,8 @@
 from flaskapp import app, notifier
-from flask import render_template, flash, url_for, redirect, request
+from flask import render_template, flash, url_for, redirect, request, g
 from flaskapp.FormTest import EnterLineForm, LoginForm
 from flaskapp import queue_handler
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 from flaskapp.models.instructor import Instructor
 
 """
@@ -10,6 +10,9 @@ from flaskapp.models.instructor import Instructor
     for the app.
 """
 
+@app.before_request
+def load_user():
+    g.user = current_user
 
 # the current main page where a student will send in their information
 @app.route("/", methods=['GET', 'POST'])
@@ -33,7 +36,7 @@ def view_line():
     if request.method == 'POST':
         queue_handler.remove(request.form['finished'])
     queue = queue_handler.get_students()
-    return render_template('display_line.html', title='Current Queue', queue=queue)
+    return render_template('display_line.html', title='Current Queue', queue=queue, user=current_user)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -54,6 +57,11 @@ def login():
     else:
         print(f"not validated errors={form.errors}")
     return render_template('login.html', title='Sign In', form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('join'))
 
 """
     Formats a place in the queue with the appropriate suffix.
