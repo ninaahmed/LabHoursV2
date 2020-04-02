@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <style>
+      .links {
+        background-color: whitesmoke;
+      }
       #joinlink {
         float: left;
         margin: 5px;
@@ -41,7 +44,7 @@
     <header>
       <nav>
         <ul>
-          <div class="links">
+          <div class=links>
             <li id="joinlink"><a href="{{ url_for('join') }}">Join</a></li>
             <li id="viewlink"><a href="{{ url_for('view_line') }}">View</a></li>
             <li id="removelink">
@@ -62,8 +65,6 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    <div class="full_height" id="blockcontent">
       {% block content %}{% endblock %}
-    </div>
   </body>
 </html>
