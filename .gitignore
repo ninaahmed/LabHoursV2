@@ -4,3 +4,5 @@ venv
 flaskapp/labhours.db
 **.cred
 **.DS_Store
+.vscode
+settings.json

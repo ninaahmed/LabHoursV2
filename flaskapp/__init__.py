@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, g
 from flaskapp.notifications import Notifier
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -8,6 +8,7 @@ app.config['SECRET_KEY'] = '60e9d370211350d549959ff535c06f13'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///labhours.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+
 db = SQLAlchemy(app)
 
 login = LoginManager(app)
@@ -16,5 +17,8 @@ login = LoginManager(app)
 EMAIL_CREDENTIALS_FILE = "testing.cred"
 # Create an Email Notifications object to use throughout lifetime of program
 notifier = Notifier(EMAIL_CREDENTIALS_FILE)
+
+# Full Link to Website
+FULL_URL = "https://localhost:5000"
 
 from flaskapp import routes

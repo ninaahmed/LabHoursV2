@@ -13,7 +13,7 @@
     <h1>You're up next in the Queue!</h1>
     <p>Make sure you're ready for the TA to see you in the Zoom meeting.</p>
     <br />
-    <p>If you would like to remove yourself from the queue, click <a href="{{url_for('remove_student')}}">here</a>.</p>
+    <p>If you would like to remove yourself from the queue, click <a href="{{g.full_url + url_for('remove_student')}}">here</a>.</p>
 </body>
 
 </html>
