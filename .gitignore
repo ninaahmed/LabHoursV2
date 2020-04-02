@@ -3,3 +3,4 @@ __pycache__
 venv
 flaskapp/labhours.db
 **.cred
+**.DS_Store
