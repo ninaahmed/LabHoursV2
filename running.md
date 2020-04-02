@@ -12,3 +12,5 @@
 3. Install required packages: `(venv) $ pip3 install -r requirements.pip`
 
 4. Run the app! `(venv) $ flask run`
+
+5. To deactive the virtual environment, run: `(venv) $ deactivate`
