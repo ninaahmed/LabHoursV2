@@ -53,9 +53,6 @@ def view_line():
             v.was_helped = 1
             v.instructor_id = current_user.id
             db.session.commit()
-            s = queue_handler.peek_runner_up()
-            if s is not None:
-                notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", render_template("up_next_email.html"), 'html')
         elif 'removed' in request.form:
             uid = request.form['removed']
             queue_handler.remove(uid)
@@ -63,9 +60,9 @@ def view_line():
             v.time_left = datetime.utcnow()
             v.was_helped = 0
             db.session.commit()
-            s = queue_handler.peek_runner_up()
-            if s is not None:
-                notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", render_template("up_next_email.html"), 'html')
+        s = queue_handler.peek_runner_up()
+        if s is not None:
+            notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", render_template("up_next_email.html"), 'html')
  
     queue = queue_handler.get_students()
     return render_template('display_line.html', title='Current Queue', queue=queue, user=current_user)
