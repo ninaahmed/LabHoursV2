@@ -1,7 +1,9 @@
 from flaskapp import app, notifier
-from flask import render_template, flash, url_for, redirect
-from flaskapp.FormTest import EnterLineForm
+from flask import render_template, flash, url_for, redirect, request
+from flaskapp.FormTest import EnterLineForm, LoginForm
 from flaskapp import queue_handler
+from flask_login import current_user, login_user
+from app.models import User
 
 """
     This file will contain all of the Flask routes
@@ -12,7 +14,6 @@ from flaskapp import queue_handler
 # the current main page where a student will send in their information
 @app.route("/", methods=['GET', 'POST'])
 def join():
-    
     form = EnterLineForm()
 
     # go to the page that shows the people in the queue if you've submitted
@@ -29,8 +30,24 @@ def join():
 # prints out what the current queue looks like
 @app.route("/line", methods=['GET', 'POST'])
 def view_line():
+    if request.method == 'POST':
+        queue_handler.remove(request.form['finished'])
     queue = queue_handler.get_students()
     return render_template('display_line.html', title='Current Queue', queue=queue)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('view_line'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        #login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('view_line'))
+    return render_template('login.html', title='Sign In', form=form)
 
 """
     Formats a place in the queue with the appropriate suffix.

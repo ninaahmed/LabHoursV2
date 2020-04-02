@@ -9,10 +9,7 @@ def enqueue(name, email, eid):
 	added_person = Student(name, email, eid)
 
 	# check to see if they are in the queue already
-	for i in range(0, len(student_queue)):
-		if(added_person.eid == student_queue[i].eid):
-			del student_queue[i]
-			break
+	remove(eid)
 	
 	#add them to the queue, return their place in line
 	student_queue.append(added_person)
@@ -21,9 +18,8 @@ def enqueue(name, email, eid):
 def get_students():
 	return student_queue
 
-def dequeue(eid):
-	if len(student_queue) > 0:
-		name = student_queue[0].name
-		del student_queue[0]
-		return name
-	return None
+def remove(eid):
+	for i in range(0, len(student_queue)):
+		if(eid == student_queue[i].eid):
+			del student_queue[i]
+			break
