@@ -16,6 +16,7 @@ from datetime import datetime
 
 @app.before_request
 def load_user():
+    g.full_url = FULL_URL 
     g.user = current_user
 
 # the current main page where a student will send in their information
