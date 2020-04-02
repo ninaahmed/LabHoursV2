@@ -27,9 +27,9 @@ class Notifier:
         self.smtp_client.starttls()
         with open(credentials_file) as creds:
             # Cuts off the newline character at end of string
-            self.from_addr = creds.readline()[:-1]
-            user = creds.readline()[:-1]
-            password = creds.readline()[:-1]
+            self.from_addr = creds.readline().strip()
+            user = creds.readline().strip()
+            password = creds.readline().strip()
             # Logs into the SMTP Server
             self.smtp_client.login(user, password)
             creds.close()
