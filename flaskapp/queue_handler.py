@@ -5,14 +5,13 @@ queue_lock = Lock()
 
 student_queue = []
 
-def enqueue(name, email, eid):
-	added_person = Student(name, email, eid)
+def enqueue(student):
 
 	# check to see if they are in the queue already
-	remove(eid)
+	remove(student.eid)
 	
 	#add them to the queue, return their place in line
-	student_queue.append(added_person)
+	student_queue.append(student)
 	return len(student_queue)
 
 def get_students():
