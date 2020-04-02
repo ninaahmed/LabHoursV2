@@ -46,17 +46,13 @@ def view_line():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    print("in login")
     if current_user.is_authenticated:
         return redirect(url_for('view_line'))
-    print("after if")
     form = LoginForm()
-    print(f"email = {form.email.data}, password = {form.password.data}")
 
     if form.validate_on_submit():
         user = Instructor.query.filter_by(email=form.email.data).first()
         if user is None or not user.check_password(form.password.data):
-            print('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember=False)
         return redirect(url_for('view_line'))

@@ -13,7 +13,7 @@ class EnterLineForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     email = StringField('Email',
-        validators=[])
+        validators=[DataRequired(), Email()])
     password = PasswordField('Password',
-        validators=[])
+        validators=[DataRequired()])
     submit = SubmitField('Sign In')
