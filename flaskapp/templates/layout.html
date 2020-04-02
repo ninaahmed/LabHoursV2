@@ -11,6 +11,10 @@
         float: left;
         margin: 5px;
       }
+      #removelink {
+        float: left;
+        margin: 5px;
+      }
       #loginlink {
         float: right;
         margin: 5px;
@@ -25,6 +29,7 @@
             <div class="links">
               <li id="joinlink"><a href="{{ url_for('join') }}">Join</a></li>
               <li id="viewlink"><a href="{{ url_for('view_line') }}">View</a></li>
+              <li id="removelink"><a href="{{ url_for('remove_student') }}">Remove</a></li>
               {% if g.user.is_authenticated %}
               <li id="loginlink"><a href=" {{ url_for('logout') }}"> Logout</a></li>
               <li id="loginlink">{{g.user.first_name}}</li>

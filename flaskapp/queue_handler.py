@@ -27,3 +27,10 @@ def remove(id):
 		if(id == student_queue[i].id):
 			del student_queue[i]
 			break
+
+def remove_eid(eid):
+	for i in range(0, len(student_queue)):
+		if(eid == student_queue[i].eid):
+			del student_queue[i]
+			return True
+	return False
