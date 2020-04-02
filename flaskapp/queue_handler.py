@@ -17,6 +17,11 @@ def enqueue(student):
 def get_students():
 	return student_queue
 
+def peek_runner_up():
+	if len(student_queue) <= 1:
+		return None
+	return student_queue[1]
+
 def remove(id):
 	for i in range(0, len(student_queue)):
 		if(id == student_queue[i].id):
