@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <style>
       #joinlink {
         float: left;
@@ -22,28 +22,47 @@
       #blockcontent {
         clear: both;
       }
+      html,
+      body {
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      #full_height{
+        height: 100%
+      }
+
+      body > * {
+        flex-shrink: 0;
+      }
     </style>
     <header>
-        <nav>
-          <ul>
-            <div class="links">
-              <li id="joinlink"><a href="{{ url_for('join') }}">Join</a></li>
-              <li id="viewlink"><a href="{{ url_for('view_line') }}">View</a></li>
-              <li id="removelink"><a href="{{ url_for('remove_student') }}">Remove</a></li>
-              {% if g.user.is_authenticated %}
-              <li id="loginlink"><a href=" {{ url_for('logout') }}"> Logout</a></li>
-              <li id="loginlink">{{g.user.first_name}}</li>
-              {% else %}
-              <li id="loginlink"><a href="{{ url_for('login') }}">Login</a></li>
-              {% endif %}
-            </div>
-          </ul>
-        </nav>
+      <nav>
+        <ul>
+          <div class="links">
+            <li id="joinlink"><a href="{{ url_for('join') }}">Join</a></li>
+            <li id="viewlink"><a href="{{ url_for('view_line') }}">View</a></li>
+            <li id="removelink">
+              <a href="{{ url_for('remove_student') }}">Remove</a>
+            </li>
+            {% if g.user.is_authenticated %}
+            <li id="loginlink">
+              <a href=" {{ url_for('logout') }}"> Logout</a>
+            </li>
+            <li id="loginlink">{{g.user.first_name}}</li>
+            {% else %}
+            <li id="loginlink"><a href="{{ url_for('login') }}">Login</a></li>
+            {% endif %}
+          </div>
+        </ul>
+      </nav>
     </header>
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    <div id="blockcontent">
+    <div class="full_height" id="blockcontent">
       {% block content %}{% endblock %}
     </div>
   </body>

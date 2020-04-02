@@ -45,17 +45,28 @@ def view_line():
     # A button was pressed on an entry in the line
     if request.method == 'POST':
         # Handle removing student
-        uid = request.form['finished']
-        queue_handler.remove(uid)
-        v = Visit.query.filter_by(id=uid).first()
-        v.time_left = datetime.utcnow()
-        v.was_helped = 1
-        v.instructor_id = current_user.id
-        db.session.commit()
-        s = queue_handler.peek_runner_up()
-        if s is not None:
-            notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", render_template("up_next_email.html"), 'html')
-
+        if 'finished' in request.form:
+            uid = request.form['finished']
+            queue_handler.remove(uid)
+            v = Visit.query.filter_by(id=uid).first()
+            v.time_left = datetime.utcnow()
+            v.was_helped = 1
+            v.instructor_id = current_user.id
+            db.session.commit()
+            s = queue_handler.peek_runner_up()
+            if s is not None:
+                notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", render_template("up_next_email.html"), 'html')
+        elif 'removed' in request.form:
+            uid = request.form['removed']
+            queue_handler.remove(uid)
+            v = Visit.query.filter_by(id=uid).first()
+            v.time_left = datetime.utcnow()
+            v.was_helped = 0
+            db.session.commit()
+            s = queue_handler.peek_runner_up()
+            if s is not None:
+                notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", render_template("up_next_email.html"), 'html')
+ 
     queue = queue_handler.get_students()
     return render_template('display_line.html', title='Current Queue', queue=queue, user=current_user)
 
@@ -76,8 +87,17 @@ def login():
 @app.route('/remove', methods=['GET', 'POST'])
 def remove_student():
     message = ""
+    # Form submitted to remove student
     if request.method == 'POST':
-        if queue_handler.remove_eid(request.form['eid']):
+        s = queue_handler.remove_eid(request.form['eid'])
+        if s is not None:
+            v = Visit.query.filter_by(id=s.id).first()
+            if v is not None:
+                v.time_left = datetime.utcnow()
+                v.was_helped = 0
+                db.session.commit()
+            else:
+                print("Did not find visit in the database!")
             return redirect(url_for('view_line'))
         else:
             message = "EID not found in queue"
