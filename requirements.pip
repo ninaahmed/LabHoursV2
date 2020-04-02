@@ -1,3 +1,5 @@
 flask
 flask-wtf
 python-dotenv
+flask_sqlalchemy
+flask_login
