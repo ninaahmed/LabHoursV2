@@ -1,4 +1,4 @@
-from flaskapp import app, notifier, db
+from flaskapp import app, notifier, db, FULL_URL
 from flask import render_template, flash, url_for, redirect, request, g
 from flaskapp.FormTest import EnterLineForm, LoginForm
 from flaskapp import queue_handler
