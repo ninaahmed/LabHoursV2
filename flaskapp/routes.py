@@ -67,8 +67,6 @@ def login():
             return redirect(url_for('login'))
         login_user(user, remember=False)
         return redirect(url_for('view_line'))
-    else:
-        print(f"not validated errors={form.errors}")
     return render_template('login.html', title='Sign In', form=form)
 
 @app.route('/remove', methods=['GET', 'POST'])
