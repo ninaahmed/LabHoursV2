@@ -1,16 +1,12 @@
-from flask import Flask, render_template, flash, url_for, redirect
-from FormTest import EnterLineForm
-import queue_handler
-from notifications import Notifier
-app = Flask(__name__)
+from flaskapp import app, notifier
+from flask import render_template, flash, url_for, redirect
+from flaskapp.FormTest import EnterLineForm
+from flaskapp import queue_handler
 
-app.config['SECRET_KEY'] = '60e9d370211350d549959ff535c06f13'
-
-# Credentials File
-EMAIL_CREDENTIALS_FILE = "testing.cred"
-# Create an Email Notifications object to use throughout lifetime of program
-notifier = Notifier(EMAIL_CREDENTIALS_FILE)
-
+"""
+    This file will contain all of the Flask routes
+    for the app.
+"""
 
 
 # the current main page where a student will send in their information
@@ -50,7 +46,3 @@ def get_place_str(place):
         return "2nd"
     elif place == 3:
         return "3rd"
-
-if __name__ == "__main__":
-    app.run()
-    
