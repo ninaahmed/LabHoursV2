@@ -6,6 +6,7 @@ from flask_login import LoginManager
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '60e9d370211350d549959ff535c06f13'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///labhours.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 

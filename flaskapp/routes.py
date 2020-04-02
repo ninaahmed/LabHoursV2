@@ -3,7 +3,7 @@ from flask import render_template, flash, url_for, redirect, request
 from flaskapp.FormTest import EnterLineForm, LoginForm
 from flaskapp import queue_handler
 from flask_login import current_user, login_user
-from app.models import User
+from flaskapp.models.instructor import Instructor
 
 """
     This file will contain all of the Flask routes
