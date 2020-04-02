@@ -7,5 +7,5 @@ class Visit(db.Model):
     time_entered = db.Column(db.DateTime, index=True, nullable=False)
     time_left = db.Column(db.DateTime)
     was_helped = db.Column(db.Integer)
-    instructor_id = db.Column(db.Integer, db.ForeignKey('instructor.id'))
+    instructor_id = db.Column(db.Integer, db.ForeignKey('instructors.id'))
 

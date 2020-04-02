@@ -1,9 +1,12 @@
-from flaskapp import app, notifier
+from flaskapp import app, notifier, db
 from flask import render_template, flash, url_for, redirect, request, g
 from flaskapp.FormTest import EnterLineForm, LoginForm
 from flaskapp import queue_handler
 from flask_login import current_user, login_user, logout_user
 from flaskapp.models.instructor import Instructor
+from flaskapp.models.visit import Visit
+from datetime import datetime
+
 
 """
     This file will contain all of the Flask routes
@@ -25,6 +28,9 @@ def join():
         flash(f'{form.name.data} has been added to the queue!', 'success')
         place = queue_handler.enqueue(form.name.data, form.email.data, form.eid.data)
         notifier.send_message(form.email.data, "Notification from Lab Hours Queue", render_template("email_template.html", queue_pos_string=get_place_str(place)), 'html')
+        visit = Visit(eid=form.eid.data, time_entered=datetime.utcnow(), time_left=None, was_helped=0, instructor_id=None)
+        db.session.add(visit)
+        db.session.commit()
         return redirect(url_for('view_line'))
 
     # render the template for submitting otherwise
