@@ -80,7 +80,7 @@ def remove_student():
         if queue_handler.remove_eid(request.form['eid']):
             return redirect(url_for('view_line'))
         else:
-            message = "Sorry that didn't work out :-/"
+            message = "EID not found in queue"
     return render_template('remove.html', message=message)
 
 @app.route('/logout')
