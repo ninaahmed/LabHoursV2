@@ -71,6 +71,16 @@ def login():
         print(f"not validated errors={form.errors}")
     return render_template('login.html', title='Sign In', form=form)
 
+@app.route('/remove', methods=['GET', 'POST'])
+def remove_student():
+    message = ""
+    if request.method == 'POST':
+        if queue_handler.remove_eid(request.form['eid']):
+            return redirect(url_for('view_line'))
+        else:
+            message = "Sorry that didn't work out :-/"
+    return render_template('remove.html', message=message)
+
 @app.route('/logout')
 def logout():
     logout_user()
