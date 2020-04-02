@@ -19,6 +19,6 @@ EMAIL_CREDENTIALS_FILE = "testing.cred"
 notifier = Notifier(EMAIL_CREDENTIALS_FILE)
 
 # Full Link to Website
-FULL_URL = "https://localhost:5000"
+FULL_URL = "https://314.consulting"
 
 from flaskapp import routes
