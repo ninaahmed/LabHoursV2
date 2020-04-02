@@ -57,5 +57,5 @@ class Notifier:
         Destructor for Notifier object, simply
         ends the current SMTP session
     """
-    def __del__(self):
-        self.smtp_client.quit()
+    #def __del__(self):
+    #    self.smtp_client.quit()
