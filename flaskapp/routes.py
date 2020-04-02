@@ -82,11 +82,14 @@ def logout():
     Used in the email when someone joins the queue
 """
 def get_place_str(place):
-    if place >= 4:
+    place_str = str(place)
+    if len(place_str) == 2 and place_str[0] == '1':
         return f"{place}th"
-    elif place == 1:
-        return "1st"
-    elif place == 2:
-        return "2nd"
-    elif place == 3:
-        return "3rd"
+    elif place_str[-1] == '1':
+        return f"{place}st"
+    elif place_str[-1] == '2':
+        return f"{place}nd"
+    elif place_str[-1] == '3':
+        return f"{place}rd"
+    else:
+        return f"{place}th"
