@@ -41,7 +41,7 @@ def join():
             place = queue_handler.enqueue(s)
             flash(f'{form.name.data} has been added to the queue!', 'success')
             try:
-                notifier.send_message(form.email.data, "Notification from 314 Lab Hours Queue", render_template("added_to_queue_email.html", queue_pos_string=get_place_str(place)), 'html')
+                notifier.send_message(form.email.data, "Notification from 314 Lab Hours Queue", render_template("added_to_queue_email.html", place_str=get_place_str(place), student_name=form.name.data, remove_code="312-314"), 'html')
             except Exception as e:
                 print(f"Failed to send email to {form.email.data}\n{e}")
             return redirect(url_for('view_line'))
@@ -176,6 +176,6 @@ def handle_remove(request):
     s = queue_handler.peek_runner_up()
     if s is not None:
         try:
-            notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", render_template("up_next_email.html"), 'html')
+            notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", render_template("up_next_email.html", student_name=s.name, remove_code="312-314"), 'html')
         except:
             print(f"Failed to send email to {s.email}")
