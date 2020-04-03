@@ -12,6 +12,7 @@ def display_menu():
             modify_instructor()
             choice = 0
         else:
+            print_divide()
             print("Instructor table editor")
             print("1. Add a new instructor entry")
             print("2. Modify an instructor entry")
@@ -22,6 +23,7 @@ def display_menu():
     exit()
 
 def new_instructor():
+    print_divide()
     print("Creating a new instructor entry")
     first_name = input("First name: ").strip()
     last_name = input("Last name: ").strip()
@@ -36,6 +38,7 @@ def new_instructor():
     display_menu()
     
 def modify_instructor():
+    print_divide()
     print("Modify an instructor entry")
     email = input("Enter email of instructor to modify: ")
     instr = Instructor.query.filter_by(email=email).first()
@@ -63,6 +66,9 @@ def modify_instructor():
     instr.email = email
     instr.password_hash = password
 
+def print_divide():
+    print()
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 if __name__=="__main__":
     display_menu()
