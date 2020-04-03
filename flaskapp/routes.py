@@ -33,7 +33,10 @@ def join():
         s = Student(form.name.data, form.email.data, form.eid.data, visit.id)
         place = queue_handler.enqueue(s)
         flash(f'{form.name.data} has been added to the queue!', 'success')
-        notifier.send_message(form.email.data, "Notification from 314 Lab Hours Queue", render_template("added_to_queue_email.html", queue_pos_string=get_place_str(place)), 'html')
+        try:
+            notifier.send_message(form.email.data, "Notification from 314 Lab Hours Queue", render_template("added_to_queue_email.html", queue_pos_string=get_place_str(place)), 'html')
+        except:
+            print(f"Failed to send email to {form.email.data}")
         return redirect(url_for('view_line'))
 
     # render the template for submitting otherwise
@@ -62,7 +65,10 @@ def view_line():
             db.session.commit()
         s = queue_handler.peek_runner_up()
         if s is not None:
-            notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", render_template("up_next_email.html"), 'html')
+            try:
+                notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", render_template("up_next_email.html"), 'html')
+            except:
+                print(f"Failed to send email to {s.email}")
  
     queue = queue_handler.get_students()
     return render_template('display_line.html', title='Current Queue', queue=queue, user=current_user)

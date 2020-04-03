@@ -23,15 +23,12 @@ class Notifier:
         SMTP server. (See comment above for format)
     """
     def __init__(self, credentials_file):
-        self.smtp_client = smtplib.SMTP(MAIL_SERVER, SMTP_PORT)
-        self.smtp_client.starttls()
         with open(credentials_file) as creds:
             # Cuts off the newline character at end of string
             self.from_addr = creds.readline().strip()
-            user = creds.readline().strip()
-            password = creds.readline().strip()
+            self.user = creds.readline().strip()
+            self.password = creds.readline().strip()
             # Logs into the SMTP Server
-            self.smtp_client.login(user, password)
             creds.close()
 
     """
@@ -51,7 +48,11 @@ class Notifier:
         else:
             msg.attach(MIMEText(body, 'plain'))
 
-        self.smtp_client.send_message(msg)
+        smtp_client = smtplib.SMTP(MAIL_SERVER, SMTP_PORT)
+        smtp_client.starttls()
+        smtp_client.login(self.user, self.password)
+        smtp_client.send_message(msg)
+        smtp_client.quit()
 
     """
         Destructor for Notifier object, simply
