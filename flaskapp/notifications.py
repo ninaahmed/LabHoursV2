@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 from email.message import EmailMessage
 
 # UTCS mail server
-MAIL_SERVER = "mail2.cs.utexas.edu"
+MAIL_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 
 """

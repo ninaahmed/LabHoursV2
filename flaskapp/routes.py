@@ -8,7 +8,6 @@ from flaskapp.models.visit import Visit
 from datetime import datetime
 import validators
 
-
 """
     This file contains all of the Flask routes
     for the app.
@@ -43,8 +42,8 @@ def join():
             flash(f'{form.name.data} has been added to the queue!', 'success')
             try:
                 notifier.send_message(form.email.data, "Notification from 314 Lab Hours Queue", render_template("added_to_queue_email.html", queue_pos_string=get_place_str(place)), 'html')
-            except:
-                print(f"Failed to send email to {form.email.data}")
+            except Exception as e:
+                print(f"Failed to send email to {form.email.data}\n{e}")
             return redirect(url_for('view_line'))
         else:
             if len(form.errors) > 0:
