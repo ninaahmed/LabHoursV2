@@ -50,7 +50,7 @@ def join():
 @app.route("/line", methods=['GET', 'POST'])
 def view_line():
     # A button was pressed on an entry in the line
-    if request.method == 'POST':
+    if request.method == 'POST' and current_user.is_authenticated:
         # Handle removing student
         if 'finished' in request.form:
             uid = request.form['finished']
