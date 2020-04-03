@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block title %}Leave Lab Hours Queue{% endblock %}
+
+{% block zoom_wrapper %}
+<a style="float: left; margin: 5px;" href={{ link }} target="_blank">Zoom</a>
+{% endblock %}
+
+{% block content %}
+
+<html>
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+
+<head>
+  <title>Change the Zoom Meeting Link</title>
+</head>
+
+<body background-color="#EDF2F7">
+  <div style="min-height: 100%"
+    class="bg-white rounded-t-lg overflow-hidden border-t border-l border-r border-gray-400 p-4 px-3 py-10 bg-gray-200 flex justify-center">
+    <div class="w-full max-w-xs">
+      <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="POST" action="">
+        <p class="text-2xl">Change the Zoom Meeting Link</p>
+        <font color="red"> {{ message }}</font>
+        <br />
+        <br />
+        <div class="block text-gray-700 text-sm font-bold mb-2">
+          <div class="mb-2">
+            <p class="mb-2">New Meeting Link</p>
+            <input name="link" class="shadow appearance-none border rounded w-full py-2 px-3
+                        text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          </div>
+        </div>
+        <br />
+        <div>
+          <button type="submit" name="new" class="bg-blue-500 hover:bg-blue-700 text-white
+                        font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+          <button type="submit" name="reset" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold
+                        hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
+{% endblock %}

@@ -7,6 +7,7 @@ from flask_login import current_user, login_user, logout_user
 from flaskapp.models.instructor import Instructor
 from flaskapp.models.visit import Visit
 from datetime import datetime
+import validators
 
 
 """
@@ -14,7 +15,8 @@ from datetime import datetime
     for the app.
 """
 
-zoom_link = "https://www.google.com/"
+orig_link = 'https://www.google.com'
+zoom_link = 'https://www.google.com'
 
 @app.before_request
 def load_user():
@@ -101,6 +103,24 @@ def remove_student():
         else:
             message = "EID not found in queue"
     return render_template('remove.html', message=message, link = zoom_link)
+
+@app.route('/change_zoom', methods=['GET', 'POST'])
+def change_zoom():
+    global zoom_link
+    message = ""
+
+    if request.method == 'POST':
+        if 'new' in request.form:
+            temp = request.form['link']
+            if validators.url(temp):
+                zoom_link = temp
+                message = "The link has been changed!"
+            else:
+                message = "Invalid URL :-/"
+        elif 'reset' in request.form:
+            zoom_link = orig_link
+            message = "The link has been reset!"
+    return render_template('change_zoom.html', message=message, link = zoom_link)
 
 @app.route('/logout')
 def logout():
