@@ -8,7 +8,7 @@ student_queue = []
 def enqueue(student):
 
 	# check to see if they are in the queue already
-	remove(student.eid)
+	remove_eid(student.eid)
 	
 	#add them to the queue, return their place in line
 	student_queue.append(student)
