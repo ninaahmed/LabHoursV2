@@ -7,12 +7,16 @@ from flask_login import current_user, login_user, logout_user
 from flaskapp.models.instructor import Instructor
 from flaskapp.models.visit import Visit
 from datetime import datetime
+import validators
 
 
 """
     This file will contain all of the Flask routes
     for the app.
 """
+
+orig_link = 'https://www.google.com'
+zoom_link = 'https://www.google.com'
 
 @app.before_request
 def load_user():
@@ -40,7 +44,7 @@ def join():
         return redirect(url_for('view_line'))
 
     # render the template for submitting otherwise
-    return render_template('enter_line.html', title='Join Line', form=form)
+    return render_template('enter_line.html', title='Join Line', form=form, link = zoom_link)
 
 # prints out what the current queue looks like
 @app.route("/line", methods=['GET', 'POST'])
@@ -71,7 +75,7 @@ def view_line():
                 print(f"Failed to send email to {s.email}")
  
     queue = queue_handler.get_students()
-    return render_template('display_line.html', title='Current Queue', queue=queue, user=current_user)
+    return render_template('display_line.html', title='Current Queue', queue=queue, user=current_user, link=zoom_link)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -85,7 +89,7 @@ def login():
             return redirect(url_for('login'))
         login_user(user, remember=False)
         return redirect(url_for('view_line'))
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html', title='Sign In', form=form, link = zoom_link)
 
 @app.route('/remove', methods=['GET', 'POST'])
 def remove_student():
@@ -104,7 +108,25 @@ def remove_student():
             return redirect(url_for('view_line'))
         else:
             message = "EID not found in queue"
-    return render_template('remove.html', message=message)
+    return render_template('remove.html', message=message, link = zoom_link)
+
+@app.route('/change_zoom', methods=['GET', 'POST'])
+def change_zoom():
+    global zoom_link
+    message = ""
+
+    if request.method == 'POST':
+        if 'new' in request.form:
+            temp = request.form['link']
+            if validators.url(temp):
+                zoom_link = temp
+                message = "The link has been changed!"
+            else:
+                message = "Invalid URL :-/"
+        elif 'reset' in request.form:
+            zoom_link = orig_link
+            message = "The link has been reset!"
+    return render_template('change_zoom.html', message=message, link = zoom_link)
 
 @app.route('/logout')
 def logout():

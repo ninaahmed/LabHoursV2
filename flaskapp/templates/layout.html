@@ -1,71 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      .links {
-        background-color: whitesmoke;
-      }
-      #joinlink {
-        float: left;
-        margin: 5px;
-      }
-      #viewlink {
-        float: left;
-        margin: 5px;
-      }
-      #removelink {
-        float: left;
-        margin: 5px;
-      }
-      #loginlink {
-        float: right;
-        margin: 5px;
-      }
-      #blockcontent {
-        clear: both;
-      }
-      html,
-      body {
-        height: 100%;
 
-        display: flex;
-        flex-direction: column;
-      }
-      #full_height{
-        height: 100%
-      }
-      body > * {
-        flex-shrink: 0;
-      }
-      a:hover {
-        color: gray;
-      }
-    </style>
-    <header>
-      <nav>
-        <ul>
-          <div class=links>
-            <li id="joinlink"><a href="{{ url_for('join') }}">Join</a></li>
-            <li id="viewlink"><a href="{{ url_for('view_line') }}">View</a></li>
-            <li id="removelink">
-              <a href="{{ url_for('remove_student') }}">Remove</a>
-            </li>
-            {% if g.user.is_authenticated %}
-            <li id="loginlink">
-              <a href=" {{ url_for('logout') }}"> Logout</a>
-            </li>
-            <li id="loginlink">{{g.user.first_name}}</li>
-            {% else %}
-            <li id="loginlink"><a href="{{ url_for('login') }}">Login</a></li>
-            {% endif %}
-          </div>
-        </ul>
-      </nav>
-    </header>
-    <title>{% block title %}{% endblock %}</title>
-  </head>
-  <body>
-      {% block content %}{% endblock %}
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    .links {
+      background-color: whitesmoke;
+    }
+
+    #leftlink {
+      float: left;
+      margin: 7px;
+    }
+
+    #rightlink {
+      float: right;
+      margin: 7px;
+    }
+
+    #blockcontent {
+      clear: both;
+    }
+
+    html,
+    body {
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    #full_height {
+      height: 100%
+    }
+
+    body>* {
+      flex-shrink: 0;
+    }
+
+    a:hover {
+      color: gray;
+    }
+  </style>
+  <header>
+    <nav>
+      <ul>
+        <div class=links>
+          <a id="leftlink" href="{{ url_for('join') }}">Join</a>
+          <a id="leftlink" href="{{ url_for('view_line') }}">View</a>
+          <a id="leftlink" href="{{ url_for('remove_student') }}">Remove</a>
+          {% block zoom_wrapper %}
+          {% endblock %}
+          <a id="leftlink" href="https://www.cs.utexas.edu/~scottm/cs314/labHours.htm">Lab Hour Times</a>
+          {% if g.user.is_authenticated %}
+          <a id="rightlink" href=" {{ url_for('logout') }}"> Logout</a>
+          <a id="rightlink" href="{{ url_for('change_zoom') }}">Change Zoom</a>
+          <li id="rightlink">{{g.user.first_name}}:</li>
+          {% else %}
+          <a id="rightlink" href="{{ url_for('login') }}">Login</a>
+          {% endif %}
+        </div>
+      </ul>
+    </nav>
+  </header>
+  <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+  {% block content %}{% endblock %}
+</body>
+
 </html>
