@@ -14,6 +14,8 @@ from datetime import datetime
     for the app.
 """
 
+zoom_link = "https://www.google.com/"
+
 @app.before_request
 def load_user():
     g.full_url = FULL_URL 
@@ -37,7 +39,7 @@ def join():
         return redirect(url_for('view_line'))
 
     # render the template for submitting otherwise
-    return render_template('enter_line.html', title='Join Line', form=form)
+    return render_template('enter_line.html', title='Join Line', form=form, link = zoom_link)
 
 # prints out what the current queue looks like
 @app.route("/line", methods=['GET', 'POST'])
@@ -65,7 +67,7 @@ def view_line():
             notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", render_template("up_next_email.html"), 'html')
  
     queue = queue_handler.get_students()
-    return render_template('display_line.html', title='Current Queue', queue=queue, user=current_user)
+    return render_template('display_line.html', title='Current Queue', queue=queue, user=current_user, link=zoom_link)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -79,7 +81,7 @@ def login():
             return redirect(url_for('login'))
         login_user(user, remember=False)
         return redirect(url_for('view_line'))
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html', title='Sign In', form=form, link = zoom_link)
 
 @app.route('/remove', methods=['GET', 'POST'])
 def remove_student():
@@ -98,7 +100,7 @@ def remove_student():
             return redirect(url_for('view_line'))
         else:
             message = "EID not found in queue"
-    return render_template('remove.html', message=message)
+    return render_template('remove.html', message=message, link = zoom_link)
 
 @app.route('/logout')
 def logout():
