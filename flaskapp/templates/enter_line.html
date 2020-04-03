@@ -22,6 +22,8 @@
                 {{ form.hidden_tag() }}
                 <p class="text-2xl">Go to lab hours!</p>
                 <br />
+                <font color="red"> {{ message }}</font>
+                <br />
                 <div class="mb-4">
                     {{ form.name.label(class="block text-gray-700 text-sm font-bold mb-2") }}
                     {{ form.name(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline") }}
@@ -34,9 +36,15 @@
                     {{ form.eid.label(class="block text-gray-700 text-sm font-bold mb-2") }}
                     {{ form.eid(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline") }}
                 </div>
+                {% if queue_is_open %}
                 <div class="form-group">
                     {{ form.submit(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline") }}
                 </div>
+                {% else %}
+                    <button class="disabled bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline opacity-50 cursor-not-allowed">
+                        Queue is Closed
+                    </button>
+                {% endif %}
             </form>
         </div>
     </div>
