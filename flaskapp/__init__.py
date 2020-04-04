@@ -14,7 +14,7 @@ db = SQLAlchemy(app)
 login = LoginManager(app)
 
 # Credentials File
-EMAIL_CREDENTIALS_FILE = "testing.cred"
+EMAIL_CREDENTIALS_FILE = "email.cred"
 # Create an Email Notifications object to use throughout lifetime of program
 notifier = Notifier(EMAIL_CREDENTIALS_FILE)
 
