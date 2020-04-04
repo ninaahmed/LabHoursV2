@@ -15,53 +15,7 @@
     <title>Change the Zoom Meeting Link</title>
 
     <style>
-        /* Dropdown Button */
-        .dropbtn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-        }
 
-        /* The container <div> - needed to position the dropdown content */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        /* Dropdown Content (Hidden by Default) */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        /* Links inside the dropdown */
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        /* Change color of dropdown links on hover */
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
-
-        /* Show the dropdown menu on hover */
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        /* Change the background color of the dropdown button when the dropdown content is shown */
-        .dropdown:hover .dropbtn {
-            background-color: #3e8e41;
-        }
     </style>
 </head>
 
@@ -73,13 +27,18 @@
                 <p class="text-2xl">Change the Zoom Meeting Link</p>
                 <font color="red"> {{ message }}</font>
                 <br />
-                <div class="dropdown">
-                    <button class="dropbtn">Default Zoom Links</button>
-                    <div class="dropdown-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
-                    </div>
+                <br />
+                <select name="zooms" class="block w-full bg-gray-100 border border-gray-500 text-gray-700 
+                    py-3 px-1 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-800">
+                    {% for i in range(options | length) %}
+                    <option value={{ i }}> {{ options[i] }} </option>
+                    {% endfor %}
+                </select>
+                <br />
+                <div>
+                    <button type="submit" name="default" class="bg-blue-500 hover:bg-blue-700 text-white
+                        font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit Dropdown
+                        Link</button>
                 </div>
                 <br />
                 <br />
@@ -93,10 +52,7 @@
                 <br />
                 <div>
                     <button type="submit" name="new" class="bg-blue-500 hover:bg-blue-700 text-white
-                        font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
-                    <button type="submit" name="reset"
-                        class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold
-                        hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Reset</button>
+                        font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit New Link</button>
                 </div>
             </form>
         </div>

@@ -13,8 +13,9 @@ import validators
     for the app.
 """
 
-orig_link = 'https://www.google.com'
 zoom_link = 'https://www.google.com'
+options_text = ["Click Here for Default Links", "Google", "YouTube", "Stack Overflow"]
+options_urls = ["not a url", "https://www.google.com", "https://www.youtube.com", "https://www.stackoverflow.com"]
 
 queue_is_open = False
 
@@ -103,17 +104,21 @@ def change_zoom():
     message = ""
 
     if request.method == 'POST':
-        if 'new' in request.form:
+        if 'default' in request.form:
+            index = int(request.form['zooms'])
+            if index == 0:
+                message = "Invalid choice :-/"
+            else:
+                zoom_link = options_urls[index]
+                message = "The link has been changed!"
+        elif 'new' in request.form:
             temp = request.form['link']
             if validators.url(temp):
                 zoom_link = temp
                 message = "The link has been changed!"
             else:
                 message = "Invalid URL :-/"
-        elif 'reset' in request.form:
-            zoom_link = orig_link
-            message = "The link has been reset!"
-    return render_template('change_zoom.html', message=message, link = zoom_link)
+    return render_template('change_zoom.html', message=message, link = zoom_link, options=options_text)
 
 @app.route('/logout')
 def logout():
