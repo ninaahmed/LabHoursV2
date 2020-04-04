@@ -1,3 +1,14 @@
+from flaskapp import app, notifier, db, queue_handler, routes_helper
+from flask import render_template, flash, url_for, redirect, request, g
+from flaskapp.FormTest import EnterLineForm, LoginForm
+from flaskapp.student import Student
+from flask_login import current_user, login_user, logout_user
+from flaskapp.models.instructor import Instructor
+from flaskapp.models.visit import Visit
+from datetime import datetime
+import validators
+
+
 """
     Handles removing a student from the view queue
     page. This can be done either using the "Finish"
@@ -16,7 +27,7 @@ def handle_remove(request):
     v.time_left = datetime.utcnow()
     if 'finished' in request.form:
         v.was_helped = 1
-        v.instructor_id = current_user.id
+        v.instructor_id = g.current_user.id
     elif 'removed' in request.form:
         v.was_helped = 0
     # Write changes to database
