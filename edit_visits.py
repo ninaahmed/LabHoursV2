@@ -3,7 +3,7 @@ from flaskapp.models.visit import Visit
 
 def display_menu():
     choice = 0
-    while choice != 3 or choice != 4:
+    while choice != 3 and choice != 4:
         if choice == 1:
             num_entries = len(Visit.query.all())
             print(f"There are {num_entries} entries in the visits table.")
