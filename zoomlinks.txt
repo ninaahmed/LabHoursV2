@@ -1,3 +1,10 @@
+#
+# This file will contain the Zoom links which will appear
+# in the dropdown meny for instructors. It is intended to
+# contain all of the regularly-scheduled Zoom meetings
+# for lab hours throughout the week
+#
+
 Google
 https://www.google.com
 YouTube

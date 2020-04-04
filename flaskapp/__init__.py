@@ -20,6 +20,7 @@ notifier = Notifier(EMAIL_CREDENTIALS_FILE)
 
 # Initialize Zoom links from file
 ZOOM_LINKS_FILE = "zoomlinks.txt"
+COMMENT_PREFIX = '#' 
 """
     This file should have the format:
     Description of URL1
@@ -27,6 +28,8 @@ ZOOM_LINKS_FILE = "zoomlinks.txt"
     Description of URL2
     URL2
     ...
+    Lines which begin with '#' are ignored, can
+    be used as comments in the file
 """
 
 # Will store the Zoom links in memory
@@ -36,14 +39,16 @@ index = 0
 
 try:
     with open(ZOOM_LINKS_FILE) as input_file:
-        line = input_file.readline().strip()
-        while line:
-            if index % 2 == 0:
-                options_text.append(line)
-            else:
-                options_urls.append(line)
-            line = input_file.readline().strip()
-            index += 1
+        lines = [ line.strip() for line in input_file.readlines() ]
+        for line in lines:
+            # Skip empty lines and comments
+            if line and line[0] != COMMENT_PREFIX:
+                if index % 2 == 0:
+                    options_text.append(line)
+                else:
+                    options_urls.append(line)
+                line = input_file.readline().strip()
+                index += 1
 
 except Exception as e:
     print(f"Failed to initialize zoom links. Malformed or missing file: {ZOOM_LINKS_FILE}")
