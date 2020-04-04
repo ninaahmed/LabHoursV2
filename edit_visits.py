@@ -1,6 +1,14 @@
 from flaskapp import db
 from flaskapp.models.visit import Visit
 
+"""
+    A utility script for manipulating the visits
+    table in the database. 
+
+    This is not used by the app itself, it is a 
+    utility for use by those maintaining the app 
+    and database.
+"""
 def display_menu():
     choice = 0
     while choice != 3 and choice != 4:

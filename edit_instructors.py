@@ -2,6 +2,18 @@ from flaskapp import db
 from flaskapp.models.instructor import Instructor
 from werkzeug.security import generate_password_hash
 
+"""
+    A utility script for manipulating the instructors
+    table in the database.
+
+    This script is not used by the app itself, and is
+    meant to be used by the maintainers of this app
+    and databse.
+
+    Use this utility to change/add/remove Instructor
+    accounts.
+"""
+
 def display_menu():
     choice = 0
     while choice != 5 and choice != 6:

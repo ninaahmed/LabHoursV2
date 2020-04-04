@@ -37,6 +37,7 @@ options_text = ["Click Here for Default Links"]
 options_urls = ["default url"]
 index = 0
 
+# Tries to open and read the Zoom links file
 try:
     with open(ZOOM_LINKS_FILE) as input_file:
         lines = [ line.strip() for line in input_file.readlines() ]
