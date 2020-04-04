@@ -1,4 +1,4 @@
-from flaskapp import app, notifier, db, queue_handler, routes_helper
+from flaskapp import app, notifier, db, queue_handler, routes_helper, options_text, options_urls
 from flask import render_template, flash, url_for, redirect, request, g
 from flaskapp.FormTest import EnterLineForm, LoginForm
 from flaskapp.student import Student
@@ -13,9 +13,8 @@ import validators
     for the app.
 """
 
-zoom_link = 'https://www.google.com'
-options_text = ["Click Here for Default Links", "Google", "YouTube", "Stack Overflow"]
-options_urls = ["not a url", "https://www.google.com", "https://www.youtube.com", "https://www.stackoverflow.com"]
+# The current Zoom link
+zoom_link = options_urls[1] if len(options_urls) > 1 else 'https://www.utexas.instructure.com'
 
 queue_is_open = False
 
