@@ -41,7 +41,7 @@ def join():
             flash(f'{form.name.data} has been added to the queue!', 'success')
             try:
                 notifier.send_message(form.email.data, "Notification from 314 Lab Hours Queue", 
-                render_template("added_to_queue_email.html", place_str=get_place_str(place), 
+                render_template("added_to_queue_email.html", place_str=routes_helper.get_place_str(place), 
                 student_name=form.name.data, remove_code="312-314"), 'html')
             except Exception as e:
                 print(f"Failed to send email to {form.email.data}\n{e}")
@@ -58,7 +58,7 @@ def join():
 def view_line():
     # A button was pressed on an entry in the line
     if request.method == 'POST' and current_user.is_authenticated:
-       handle_line_form(request)
+       routes_helper.handle_line_form(request)
 
     queue = queue_handler.get_students()
     return render_template('display_line.html', title='Current Queue', queue=queue, user=current_user, link=zoom_link, queue_is_open=queue_is_open)
