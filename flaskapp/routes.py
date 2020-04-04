@@ -61,7 +61,7 @@ def view_line():
     global queue_is_open
     # A button was pressed on an entry in the line
     if request.method == 'POST' and current_user.is_authenticated:
-       queue_is_open = routes_helper.handle_line_form(request)
+       queue_is_open = routes_helper.handle_line_form(request, queue_is_open)
 
     queue = queue_handler.get_students()
     return render_template('display_line.html', title='Current Queue', queue=queue, user=current_user, link=zoom_link, queue_is_open=queue_is_open)

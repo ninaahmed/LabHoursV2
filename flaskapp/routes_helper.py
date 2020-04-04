@@ -8,6 +8,23 @@ from flaskapp.models.visit import Visit
 from datetime import datetime
 import validators
 
+"""
+    Handle post requests in the view line page.
+    Will return a boolean indicating whether the line should be
+    open (True) or closed (False).
+"""
+def handle_line_form(request, curr_open_state):
+    # Handle removing student, the line's "open state" should
+    # be unchanged.
+    if 'finished' in request.form or 'removed' in request.form:
+        handle_remove(request)
+        return curr_open_state
+    # Close the queue to new entries
+    elif 'close' in request.form:
+        return False
+    # Open the queue to new entries
+    elif 'open' in request.form:
+        return True
 
 """
     Handles removing a student from the view queue
@@ -22,7 +39,7 @@ def handle_remove(request):
     elif 'removed' in request.form:
         uid = request.form['removed']
     queue_handler.remove(uid)
-    # Update visit entry in the database
+    # Update this visit entry in the database
     v = Visit.query.filter_by(id=uid).first()
     if v is not None:
         v.time_left = datetime.utcnow()
@@ -61,16 +78,3 @@ def get_place_str(place):
         return f"{place}rd"
     else:
         return f"{place}th"
-
-"""
-    Handle post requests in the view line page.
-"""
-def handle_line_form(request):
-    # Handle removing student
-    if 'finished' in request.form or 'removed' in request.form:
-        handle_remove(request)
-        return True
-    elif 'close' in request.form:
-        return False
-    elif 'open' in request.form:
-        return True
