@@ -20,9 +20,20 @@ notifier = Notifier(EMAIL_CREDENTIALS_FILE)
 
 # Initialize Zoom links from file
 ZOOM_LINKS_FILE = "zoomlinks.txt"
+"""
+    This file should have the format:
+    Description of URL1
+    URL1
+    Description of URL2
+    URL2
+    ...
+"""
+
+# Will store the Zoom links in memory
 options_text = ["Click Here for Default Links"]
 options_urls = ["default url"]
 index = 0
+
 try:
     with open(ZOOM_LINKS_FILE) as input_file:
         line = input_file.readline().strip()
