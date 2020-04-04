@@ -24,14 +24,17 @@ def handle_remove(request):
     queue_handler.remove(uid)
     # Update visit entry in the database
     v = Visit.query.filter_by(id=uid).first()
-    v.time_left = datetime.utcnow()
-    if 'finished' in request.form:
-        v.was_helped = 1
-        v.instructor_id = g.user.id
-    elif 'removed' in request.form:
-        v.was_helped = 0
-    # Write changes to database
-    db.session.commit()
+    if v is not None:
+        v.time_left = datetime.utcnow()
+        if 'finished' in request.form:
+            v.was_helped = 1
+            v.instructor_id = g.user.id
+        elif 'removed' in request.form:
+            v.was_helped = 0
+        # Write changes to database
+        db.session.commit()
+    else:
+        print(f"Did not find entry for {uid} in the visits table.")
     # Notify runner-up in the queue
     s = queue_handler.peek_runner_up()
     if s is not None:
