@@ -42,7 +42,7 @@ def join():
             try:
                 notifier.send_message(form.email.data, "Notification from 314 Lab Hours Queue", 
                 render_template("added_to_queue_email.html", place_str=routes_helper.get_place_str(place), 
-                student_name=form.name.data, remove_code="312-314"), 'html')
+                student_name=form.name.data, remove_code=form.eid.data), 'html')
             except Exception as e:
                 print(f"Failed to send email to {form.email.data}\n{e}")
             return redirect(url_for('view_line'))
