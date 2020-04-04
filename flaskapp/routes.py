@@ -2,10 +2,11 @@ from flaskapp import app, notifier, db, queue_handler, routes_helper, options_te
 from flask import render_template, flash, url_for, redirect, request, g
 from flaskapp.FormTest import EnterLineForm, LoginForm
 from flaskapp.student import Student
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from flaskapp.models.instructor import Instructor
 from flaskapp.models.visit import Visit
 from datetime import datetime
+from werkzeug.urls import url_parse
 import validators
 
 """
@@ -24,6 +25,7 @@ def load_user():
 
 # the current main page where a student will send in their information
 @app.route("/", methods=['GET', 'POST'])
+@app.route("/index", methods=['GET', 'POST'])
 def join():
     form = EnterLineForm()
     message = ""
@@ -78,7 +80,10 @@ def login():
                 return render_template('login.html', title='Sign In', form=form, link = zoom_link, message=message)
             else:
                 login_user(user, remember=False)
-                return redirect(url_for('view_line'))
+                next_page = request.args.get('next')
+                if not next_page or url_parse(next_page).netloc != '':
+                    next_page = url_for('view_line')
+                return redirect(next_page)
         else:
             message = "Enter a valid email."
     return render_template('login.html', title='Sign In', form=form, link = zoom_link, message=message)
@@ -103,6 +108,7 @@ def remove_student():
     return render_template('remove.html', message=message, link = zoom_link)
 
 @app.route('/change_zoom', methods=['GET', 'POST'])
+@login_required
 def change_zoom():
     global zoom_link
     message = ""
@@ -128,6 +134,13 @@ def change_zoom():
 def logout():
     logout_user()
     return redirect(url_for('join'))
+
+"""
+    401 User not authenticated
+"""
+@app.errorhandler(401)
+def not_authenticated(error):
+    return render_template('error_pages/401.html')
 
 """
     404 Page not found Error handler
