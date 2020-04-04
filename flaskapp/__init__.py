@@ -18,7 +18,4 @@ EMAIL_CREDENTIALS_FILE = "testing.cred"
 # Create an Email Notifications object to use throughout lifetime of program
 notifier = Notifier(EMAIL_CREDENTIALS_FILE)
 
-# Full Link to Website
-FULL_URL = "http://314.consulting"
-
 from flaskapp import routes

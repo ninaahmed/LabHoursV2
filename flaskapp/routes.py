@@ -1,4 +1,4 @@
-from flaskapp import app, notifier, db, FULL_URL, queue_handler, routes_helper
+from flaskapp import app, notifier, db, queue_handler, routes_helper
 from flask import render_template, flash, url_for, redirect, request, g
 from flaskapp.FormTest import EnterLineForm, LoginForm
 from flaskapp.student import Student
@@ -20,7 +20,6 @@ queue_is_open = False
 
 @app.before_request
 def load_user():
-    g.full_url = FULL_URL 
     g.user = current_user
 
 # the current main page where a student will send in their information
