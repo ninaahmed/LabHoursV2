@@ -128,3 +128,10 @@ def change_zoom():
 def logout():
     logout_user()
     return redirect(url_for('join'))
+
+"""
+    404 Page not found Error handler
+"""
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('error_pages/404.html')
