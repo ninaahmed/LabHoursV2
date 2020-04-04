@@ -5,7 +5,11 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.message import EmailMessage
 
-# UTCS mail server
+"""
+    Mail server settings to use for sending
+    notification emails. Currently using
+    a Gmail account.
+"""
 MAIL_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 
@@ -48,6 +52,16 @@ class Notifier:
         else:
             msg.attach(MIMEText(body, 'plain'))
 
+        """
+            Actual logging in to the SMTP server happens right before
+            we send the email. Originally, this was done only once
+            in the constructor, but we seemed to get server disconnection
+            errors occasionally, potentially due to timeouts, so instead
+            we login before every email is sent.
+            If the application is taking too long to process requests, another
+            possibility would be to wrap sending an email in a try/except block
+            and only try to re-connect if we get an exception.
+        """
         smtp_client = smtplib.SMTP(MAIL_SERVER, SMTP_PORT)
         smtp_client.starttls()
         smtp_client.login(self.user, self.password)
