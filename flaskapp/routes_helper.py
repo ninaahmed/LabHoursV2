@@ -27,7 +27,7 @@ def handle_remove(request):
     v.time_left = datetime.utcnow()
     if 'finished' in request.form:
         v.was_helped = 1
-        v.instructor_id = g.current_user.id
+        v.instructor_id = g.user.id
     elif 'removed' in request.form:
         v.was_helped = 0
     # Write changes to database
@@ -37,7 +37,7 @@ def handle_remove(request):
     if s is not None:
         try:
             notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", 
-            render_template("up_next_email.html", student_name=s.name, remove_code="312-314"), 'html')
+            render_template("up_next_email.html", student_name=s.name, remove_code=s.eid), 'html')
         except:
             print(f"Failed to send email to {s.email}")
 
