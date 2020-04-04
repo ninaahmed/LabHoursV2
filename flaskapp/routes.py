@@ -69,14 +69,19 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('view_line'))
     form = LoginForm()
-
-    if form.validate_on_submit():
-        user = Instructor.query.filter_by(email=form.email.data).first()
-        if user is None or not user.check_password(form.password.data):
-            return redirect(url_for('login'))
-        login_user(user, remember=False)
-        return redirect(url_for('view_line'))
-    return render_template('login.html', title='Sign In', form=form, link = zoom_link)
+    message = ""
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user = Instructor.query.filter_by(email=form.email.data).first()
+            if user is None or not user.check_password(form.password.data):
+                message = "Incorrect email or password"
+                return render_template('login.html', title='Sign In', form=form, link = zoom_link, message=message)
+            else:
+                login_user(user, remember=False)
+                return redirect(url_for('view_line'))
+        else:
+            message = "Enter a valid email."
+    return render_template('login.html', title='Sign In', form=form, link = zoom_link, message=message)
 
 @app.route('/remove', methods=['GET', 'POST'])
 def remove_student():
