@@ -1,6 +1,6 @@
 from flaskapp import app, notifier, db, queue_handler, routes_helper, options_text, options_urls
 from flask import render_template, flash, url_for, redirect, request, g
-from flaskapp.FormTest import EnterLineForm, LoginForm
+from flaskapp.forms import EnterLineForm, LoginForm
 from flaskapp.student import Student
 from flask_login import current_user, login_user, logout_user, login_required
 from flaskapp.models.instructor import Instructor
