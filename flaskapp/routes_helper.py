@@ -54,10 +54,11 @@ def handle_remove(request):
         print(f"Did not find entry for {uid} in the visits table.")
     # Notify runner-up in the queue
     s = queue_handler.peek_runner_up()
-    if s is not None:
+    if s is not None and not s.notified:
         try:
             notifier.send_message(s.email, "Notification from 314 Lab Hours Queue", 
             render_template("up_next_email.html", student_name=s.name, remove_code=s.eid), 'html')
+            s.notified = True
         except:
             print(f"Failed to send email to {s.email}")
 
