@@ -17,9 +17,9 @@ Connections with the database were handled using the `flask_sqlalchemy` library.
 * `__init__.py` - Initializes the application by loading configuration files, initializing modules such as the databse and email notifier, and starting the Flask REST API.
 * `routes.py` - Includes all of the flask routes, i.e. all the application entry points. Will accept and process requests.
 * `routes_helper.py` - Provides helper procedures for processing the requests received in `routes.py`
-* `queue_handler.py` - 
-* `student.py` - 
-* `FormTest.py` - 
+* `queue_handler.py` - Maintains the queue of students.
+* `student.py` - Contains a class to represent a Student in the queue.
+* `forms.py` - Contains WTForm Form objects for the various forms on the site that need to be verified.
 * `notifications.py` - Handles sending email notifications.
 * `models/instructor.py` - Provides a database model for a row in the instructor table.
 * `models/visit.py` - Provides a database model for a row in the visit table.
@@ -53,6 +53,9 @@ this data could be used to analyze trends and identify
 potential issues with how lab hours are being conducted.
 
 ## HTML & CSS
+
+The Tailwind CSS framework was used for the the styling of
+the site.
 
 ## Email
 
