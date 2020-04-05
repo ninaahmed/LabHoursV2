@@ -31,7 +31,7 @@
           <a style="float: right" class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" href="{{ url_for('change_zoom') }}">Change Zoom Link</a>
           <li style="float: right" class="py-1">Logged in as {{g.user.first_name}}</li>
           {% else %}
-          <a class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" style="float: right" href="{{ url_for('login') }}">Login</a>
+          <a class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" style="float: right" href="{{ url_for('login') }}">Instructor Login</a>
           {% endif %}
         </div>
       </ul>
