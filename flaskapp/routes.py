@@ -25,7 +25,10 @@ def load_user():
 
 # the current main page where a student will send in their information
 @app.route("/", methods=['GET', 'POST'])
-@app.route("/index", methods=['GET', 'POST'])
+def homepage():
+    return render_template('homepage.html', link = zoom_link)
+
+@app.route("/join", methods=['GET', 'POST'])
 def join():
     form = EnterLineForm()
     message = ""

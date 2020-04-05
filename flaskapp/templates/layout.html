@@ -17,6 +17,8 @@
     <nav>
       <ul>
         <div class=links>
+          <a style="float: left" class="inline-block py-1 px-3 rounded hover:bg-gray-200" 
+            href="{{ url_for('homepage') }}"><img alt="Home" src="{{ url_for('static', filename='blue_queue.png') }}" width="26" height="26"></a>
           <a class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" 
             href="{{ url_for('join') }}">Join</a>
           <a class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" href="{{ url_for('view_line') }}">View</a>

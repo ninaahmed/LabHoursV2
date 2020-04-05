@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block title %}314 Lab Hours{% endblock %}
+
+{% block zoom_wrapper %}
+<a class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3"
+    href="{{ link }}" target="_blank">Current Zoom Meeting</a>
+{% endblock %}
+
+{% block content %}
+
+<html>
+
+<head>
+    <style>
+    </style>
+</head>
+
+<body background-color="#EDF2F7">
+    <div style="min-height: 100%; margin: 0 auto;" class="flex justify-center flex-wrap w-2/3">
+        <div class="rounded bg-gray-200 w-full mx-4 my-2">
+            <div class="mx-4">
+                <p class="text-5xl">Hello, Welcome to 314 Lab Hours!</p>
+                <p>Here are some instructions on how to use this website.</p>
+                <br />
+
+                <p class="text-2xl font-medium mb-2">Joining the Line</p>
+                <ol class="list-decimal mx-4 mb-2">
+                    <li>Click the Join tab.</li>
+                    <li>Check if the queue is open. You won't be able to submit your information if it's closed.</li>
+                    <li>Enter in your information if it's open.</li>
+                    <li>Click Join the Queue!</li>
+                </ol>
+                <p class="mb-2">You will be redirected to View, where your name should appear at the bottom of the page.</p>
+                <p class="mb-2"><strong>Please note:</strong> You don't have to enter your actual UT EID if you don't want to, but you
+                    should enter unique text, because you will be able to use this entry to remove yourself from the queue. And we don't 
+                    want you accidentally removing others from the line.</p>
+                <p class="mb-2">Once you start approaching the front of the line, please join the Zoom meeting. The instructors will have a 
+                    break
+                </p>
+                <p class="mb-2">Also, expect an email in your inbox telling you your place in line and what you entered in the EID field.</p>
+
+                <br />
+                <p class="text-2xl font-medium mb-2">Viewing the Line</p>
+                <p class="mb-2">This one is pretty easy, just click the View tab.</p>
+                <p class="mb-2">If you're on a tight schedule, we recommend checking this tab out before joining the line.</p>
+
+                <br />
+                <p class="text-2xl font-medium mb-2">Removing Yourself From the Line</p>
+                <ol class="list-decimal mx-4 mb-2">
+                    <li>Click the Remove Self tab.</li>
+                    <li>Enter in your UT EID, or whatever you entered in that field. If you don't remember what you entered, check your email.</li>
+                    <li>Click submit.</li>
+                </ol>
+
+                <br />
+                <p class="text-2xl font-medium mb-2">Joining the Zoom Meeting</p>
+                <p class="mb-2">This one is also simple. You can click on the Current Zoom Meeting tag, and it will open a new tab that redirects
+                    you to the zoom meeting.</p>
+                <p class="mb-2"><strong>Please note:</strong> The most reliable way to join the current Zoom meeting is through the links on the Calendar on 
+                    Canvas. The instructors change the Zoom meeting link on the website themselves whenever a new block starts. So if the link 
+                    doesn't work one day, go to Canvas.</p>
+
+                <br />
+                <p class="mb-4">If you are having any issues with the website, please email 314labhours@gmail.com or make a Piazza post.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+{% endblock %}
