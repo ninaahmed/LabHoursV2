@@ -4,22 +4,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '60e9d370211350d549959ff535c06f13'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///labhours.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.config.from_pyfile('config.cfg')
 
 db = SQLAlchemy(app)
 
 login = LoginManager(app)
 
-# Credentials File
-EMAIL_CREDENTIALS_FILE = "email.cred"
 # Create an Email Notifications object to use throughout lifetime of program
-notifier = Notifier(EMAIL_CREDENTIALS_FILE)
+notifier = Notifier(app.config['EMAIL_CREDENTIALS_FILE'], app.config['EMAIL_SERVER'], app.config['EMAIL_SERVER_PORT'])
 
 # Initialize Zoom links from file
-ZOOM_LINKS_FILE = "zoomlinks.txt"
 COMMENT_PREFIX = '#' 
 """
     This file should have the format:
@@ -39,7 +33,7 @@ index = 0
 
 # Tries to open and read the Zoom links file
 try:
-    with open(ZOOM_LINKS_FILE) as input_file:
+    with open(app.config['ZOOM_LINKS_FILE']) as input_file:
         lines = [ line.strip() for line in input_file.readlines() ]
         for line in lines:
             # Skip empty lines and comments
@@ -50,9 +44,8 @@ try:
                     options_urls.append(line)
                 line = input_file.readline().strip()
                 index += 1
-
 except Exception as e:
-    print(f"Failed to initialize zoom links. Malformed or missing file: {ZOOM_LINKS_FILE}")
+    print(f"Failed to initialize zoom links. Malformed or missing file: {app.config['ZOOM_LINKS_FILE']}")
     print(e)
     exit(1)
 

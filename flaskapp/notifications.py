@@ -1,6 +1,5 @@
-import smtplib
 from flask import render_template
-
+import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.message import EmailMessage
@@ -10,8 +9,8 @@ from email.message import EmailMessage
     notification emails. Currently using
     a Gmail account.
 """
-MAIL_SERVER = "smtp.gmail.com"
-SMTP_PORT = 587
+#MAIL_SERVER = "smtp.gmail.com"
+#SMTP_PORT = 587
 
 """
     Credentials File Format:
@@ -26,12 +25,14 @@ class Notifier:
         Requires a credentials file for logging into the
         SMTP server. (See comment above for format)
     """
-    def __init__(self, credentials_file):
+    def __init__(self, credentials_file, email_server, email_port):
         with open(credentials_file) as creds:
             # Cuts off the newline character at end of string
             self.from_addr = creds.readline().strip()
             self.user = creds.readline().strip()
             self.password = creds.readline().strip()
+            self.server = email_server
+            self.port = email_port
             # Logs into the SMTP Server
             creds.close()
 
@@ -62,7 +63,7 @@ class Notifier:
             possibility would be to wrap sending an email in a try/except block
             and only try to re-connect if we get an exception.
         """
-        smtp_client = smtplib.SMTP(MAIL_SERVER, SMTP_PORT)
+        smtp_client = smtplib.SMTP(self.server, self.port)
         smtp_client.starttls()
         smtp_client.login(self.user, self.password)
         smtp_client.send_message(msg)

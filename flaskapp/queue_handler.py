@@ -63,3 +63,10 @@ def remove_eid(eid):
 			del student_queue[i]
 			return s
 	return None
+
+"""
+	Removes all students from the queue
+"""
+def clear():
+	global student_queue
+	student_queue = []
