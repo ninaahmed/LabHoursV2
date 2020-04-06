@@ -1,12 +1,17 @@
 #
 # This file will contain the Zoom links which will appear
-# in the dropdown meny for instructors. It is intended to
+# in the dropdown menu for instructors. It is intended to
 # contain all of the regularly-scheduled Zoom meetings
 # for lab hours throughout the week
 #
 
 Monday 10am
 https://utexas.zoom.us/j/350604559
+Monday 2pm
+https://utexas.zoom.us/j/173619565
+Monday 3pm
+https://utexas.zoom.us/j/636612955
+
 
 Tuesday 11am
 https://utexas.zoom.us/j/851811817
