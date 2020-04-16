@@ -2,6 +2,7 @@
 __pycache__
 venv
 flaskapp/labhours.db
+flaskapp/config.cfg
 **.cred
 **.DS_Store
 .vscode
