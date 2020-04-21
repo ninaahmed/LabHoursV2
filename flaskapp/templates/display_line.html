@@ -45,20 +45,21 @@
     {% else %}
     {% endif %}
     <br />
-    {% for student in queue %}
+    {% for i in range(queue | length) %}
     <div class="container flex mx-auto px-4 mb-2">
       <div class="bg-white max-w-full w-full min-w-full flex shadow-lg justify-center">
-        <div class="px-6 py-4 flex-grow">
-          <div class="font-bold text-xl mb-2">{{ student.name }}</div>
+        <div style="vertical-align: middle" class="px-6 py-4 flex-grow">
+          <div style="float: left" class="font-bold text-xl text-gray-500 mt-1 mr-4">{{ i }}</div>
+          <div class="font-bold text-xl mt-1">{{ queue[i].name }}</div>
         </div>
         <div class="px-6 py-4">
           <form method="POST">
             {% if g.user.is_authenticated %}
-            <button name="finished" value={{ student.id }}
+            <button name="finished" value={{ queue[i].id }}
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Helped
             </button>
-            <button name="removed" value={{ student.id }}
+            <button name="removed" value={{ queue[i].id }}
               class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
               Remove
             </button>
