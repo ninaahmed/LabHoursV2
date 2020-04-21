@@ -7,3 +7,5 @@ flaskapp/config.cfg
 **.DS_Store
 .vscode
 settings.json
+zoomlinks.txt
+config.cfg
