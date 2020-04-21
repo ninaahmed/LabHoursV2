@@ -31,4 +31,8 @@ https://utexas.zoom.us/j/851811817
 Friday 11am
 https://utexas.zoom.us/j/840932984
 Friday 2pm
+<<<<<<< Updated upstream
 https://utexas.zoom.us/j/711071482
+=======
+https://utexas.zoom.us/j/711071482
+>>>>>>> Stashed changes
