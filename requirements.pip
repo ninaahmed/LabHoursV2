@@ -4,3 +4,4 @@ python-dotenv
 flask_sqlalchemy
 flask_login
 validators
+email_validator
