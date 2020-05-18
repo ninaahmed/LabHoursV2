@@ -47,7 +47,7 @@ def join():
             place = queue_handler.enqueue(s)
             flash(f'{form.name.data} has been added to the queue!', 'success')
             try:
-                notifier.send_message(form.email.data, "Notification from 314 Lab Hours Queue", 
+                notifier.send_message(form.email.data, "Notification from 303E Lab Hours Queue", 
                 render_template("added_to_queue_email.html", place_str=routes_helper.get_place_str(place), 
                 student_name=form.name.data, remove_code=form.eid.data), 'html')
             except Exception as e:
