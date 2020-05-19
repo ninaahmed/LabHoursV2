@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 login = LoginManager(app)
 
 # Create an Email Notifications object to use throughout lifetime of program
-notifier = Notifier(app.config['EMAIL_CREDENTIALS_FILE'], app.config['EMAIL_SERVER'], app.config['EMAIL_SERVER_PORT'])
+notifier = Notifier(app.config['EMAIL_ACCOUNT'], app.config['EMAIL_PASSWORD'], app.config['EMAIL_SERVER'], app.config['EMAIL_SERVER_PORT'])
 
 # Initialize Zoom links from file
 COMMENT_PREFIX = '#' 

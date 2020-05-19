@@ -1,6 +1,6 @@
-from flaskapp import app, notifier, db, queue_handler, routes_helper, options_text, options_urls
+from flaskapp import app, notifier, db, queue_handler, routes_helper, password_reset, options_text, options_urls
 from flask import render_template, flash, url_for, redirect, request, g
-from flaskapp.forms import EnterLineForm, LoginForm
+from flaskapp.forms import EnterLineForm, LoginForm, RequestResetForm, ResetPasswordForm
 from flaskapp.student import Student
 from flask_login import current_user, login_user, logout_user, login_required
 from flaskapp.models.instructor import Instructor
@@ -14,7 +14,6 @@ import json
     This file contains all of the Flask routes
     for the app.
 """
-
 # The current Zoom link
 zoom_link = options_urls[1] if len(options_urls) > 1 else 'https://www.utexas.instructure.com'
 
@@ -170,8 +169,44 @@ def close():
     if request.form['token'] != expected_token:
         return json.dumps({'success':False}), 401, {'ContentType':'application/json'} 
     queue_is_open = False
-    print('closed')
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route('/request_reset', methods=['GET', 'POST'])
+def request_reset():
+    form = RequestResetForm()
+    message = ""
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            form_email = form.email.data
+            user = Instructor.query.filter_by(email=form_email).first()
+            if user is None:
+                message = "Not a valid email address"
+                return render_template('request_reset.html', form=form, message=message)
+            else:
+                # This is a valid user/email address
+                password_reset.create_reset_request(user)
+                return render_template('reset_message.html', title="Reset Request Made", body=f"Instructions for resetting your password have been sent to {form_email}")
+        else:
+            message = "Enter a valid email"
+
+    return render_template('request_reset.html', form=form, message=message)
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    form = ResetPasswordForm()
+    message = ''
+    if 'token' in request.args:
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                if password_reset.update_password(request.args['token'], form.password.data):
+                    return render_template('reset_message.html', title="Password reset", body="Your password was successfully updated")
+                else:
+                    return render_template('reset_message.html', title="Reset error", body="Your password could not be reset. The reset link used is no longer valid.")
+            else:
+                message = 'Both passwords must match'
+        return render_template('reset_password.html', token=request.args['token'], form = form, message=message)
+    else:
+        return render_template('reset_message.html', title="Reset error", body="Malformed reset link. Token not present")
 
 """
     401 User not authenticated
