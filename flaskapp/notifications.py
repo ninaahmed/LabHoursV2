@@ -25,16 +25,13 @@ class Notifier:
         Requires a credentials file for logging into the
         SMTP server. (See comment above for format)
     """
-    def __init__(self, credentials_file, email_server, email_port):
-        with open(credentials_file) as creds:
-            # Cuts off the newline character at end of string
-            self.from_addr = creds.readline().strip()
-            self.user = creds.readline().strip()
-            self.password = creds.readline().strip()
-            self.server = email_server
-            self.port = email_port
-            # Logs into the SMTP Server
-            creds.close()
+    def __init__(self, address, password, email_server, email_port):
+        # Cuts off the newline character at end of string
+        self.from_addr = address
+        self.user = address
+        self.password = password
+        self.server = email_server
+        self.port = email_port
 
     """
         Send an email message to the desired "to_addr".
