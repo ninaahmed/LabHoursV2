@@ -7,8 +7,13 @@ app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 
 db = SQLAlchemy(app)
-
 login = LoginManager(app)
+
+# Create database tables if nonexistent
+from flaskapp.models.instructor import *
+from flaskapp.models.visit import *
+db.create_all()
+db.session.commit()
 
 # Create an Email Notifications object to use throughout lifetime of program
 notifier = Notifier(app.config['EMAIL_ACCOUNT'], app.config['EMAIL_PASSWORD'], app.config['EMAIL_SERVER'], app.config['EMAIL_SERVER_PORT'])

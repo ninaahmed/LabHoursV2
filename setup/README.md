@@ -26,11 +26,5 @@ for the application. Some of these include the application secret key, email ser
 etc. A template of the config file is provided in `setup/config.cfg` which for development purposes
 can simply be copied to `flaskapp/config.cfg` (the template values are sufficient).
 
-Then, a `labhours.db` SQLite database file will be needed to
-handle instructor login and visit logging.
-An empty database with the same schema is provided called `empty.db` and can be copied to `labhours.db`.
-You can then use the provided database manipulation scripts
-(`edit_instructors.py` and `edit_visits.py` to add to the tables).
-
 A sample `zoomlinks.txt` file is provided, although you
 may want to change its contents for testing.
