@@ -23,11 +23,8 @@ There are some files required to run the application which are not included as a
 
 The most important file needed is the `flaskapp/config.cfg` which defines many configuration variables
 for the application. Some of these include the application secret key, email server information,
-etc. A template of the config file is provided in `config_template.cfg` which for development purposes
+etc. A template of the config file is provided in `setup/config.cfg` which for development purposes
 can simply be copied to `flaskapp/config.cfg` (the template values are sufficient).
-
-The first is `email.cred` which should be created in the main repository directory.
-This file will contain the login credentials to the SMTP server used to send email notifications.
 
 Then, a `labhours.db` SQLite database file will be needed to
 handle instructor login and visit logging.
