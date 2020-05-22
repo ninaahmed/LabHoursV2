@@ -1,14 +1,16 @@
 from flaskapp import app, notifier, db, queue_handler, routes_helper, password_reset, options_text, options_urls
 from flask import render_template, flash, url_for, redirect, request, g
-from flaskapp.forms import EnterLineForm, LoginForm, RequestResetForm, ResetPasswordForm
+from flaskapp.forms import EnterLineForm, LoginForm, RequestResetForm, ResetPasswordForm, InstructorForm
 from flaskapp.student import Student
 from flask_login import current_user, login_user, logout_user, login_required
 from flaskapp.models.instructor import Instructor
 from flaskapp.models.visit import Visit
 from datetime import datetime
 from werkzeug.urls import url_parse
+from werkzeug.security import generate_password_hash
 import validators
 import json
+import secrets
 
 """
     This file contains all of the Flask routes
@@ -83,6 +85,9 @@ def login():
                 message = "Incorrect email or password"
                 return render_template('login.html', title='Sign In', form=form, link = zoom_link, message=message)
             else:
+                if not user.is_active:
+                    message = "This account is inactive."
+                    return render_template('login.html', title='Sign In', form=form, link = zoom_link, message=message)
                 login_user(user, remember=False)
                 next_page = request.args.get('next')
                 if not next_page or url_parse(next_page).netloc != '':
@@ -143,7 +148,7 @@ def logout():
 def clear():
     if 'token' not in request.form:
         return json.dumps({'success':False}), 401, {'ContentType':'application/json'} 
-    expected_token = app.config['CLEAR_TOKEN'];
+    expected_token = app.config['CLEAR_TOKEN']
     if request.form['token'] != expected_token:
        return json.dumps({'success':False}), 401, {'ContentType':'application/json'} 
     queue_handler.clear()
@@ -154,7 +159,7 @@ def open():
     global queue_is_open
     if 'token' not in request.form:
         return json.dumps({'success':False}), 401, {'ContentType':'application/json'} 
-    expected_token = app.config['OPEN_TOKEN'];
+    expected_token = app.config['OPEN_TOKEN']
     if request.form['token'] != expected_token:
        return json.dumps({'success':False}), 401, {'ContentType':'application/json'} 
     queue_is_open = True
@@ -207,6 +212,70 @@ def reset_password():
         return render_template('reset_password.html', token=request.args['token'], form = form, message=message)
     else:
         return render_template('reset_message.html', title="Reset error", body="Malformed reset link. Token not present")
+
+@app.route('/admin_panel', methods=['GET', 'POST'])
+@login_required
+def admin_panel():
+    if current_user.is_admin:
+        return render_template('admin_panel.html', instructors=Instructor.query.all())
+    else:
+        return render_template('reset_message.html', title="Admin Panel", body="Not authenticated, must be admin")
+
+
+@app.route('/edit_instructor', methods=['GET', 'POST'])
+@login_required
+def edit_instructor():
+    if current_user.is_admin:
+        if 'id' not in request.args:
+            return render_template('reset_message.html', title="Error", body="Missing instructor id")
+        instr = Instructor.query.filter_by(id=request.args['id']).first()
+        if request.method == 'GET':
+            if instr is None:
+                return render_template('reset_message.html', title="Error", body="Invalid instructor id")
+            form = InstructorForm(first_name=instr.first_name, last_name=instr.last_name, email=instr.email, is_active=(instr.is_active != 0), is_admin=(instr.is_admin != 0))
+            return render_template('edit_instructor.html', title="Edit Instructor", form=form, message='', id=instr.id)
+        else:
+            form = InstructorForm()
+            if form.validate_on_submit():
+                instr.first_name = form.first_name.data
+                instr.last_name = form.last_name.data
+                instr.email = form.email.data
+                instr.is_active = 1 if form.is_active.data else 0
+                instr.is_admin = 1 if form.is_admin.data else 0
+                db.session.commit()
+                return redirect('admin_panel')
+            else:
+                message = 'Enter a valid email address'
+                return render_template('edit_instructor.html', title="Edit Instructor", form=form, message=message)
+    else:
+        return render_template('reset_message.html', title="Edit user", body="Not authenticated")
+
+@app.route('/add_instructor', methods=['GET', 'POST'])
+@login_required
+def add_instructor():
+    if current_user.is_admin:
+        message = ''
+        if request.method == 'GET':
+            form = InstructorForm(is_active=True)
+            return render_template('edit_instructor.html', title="Create Instructor", form=form, message=message)
+        else:
+            form = InstructorForm()
+            if form.validate_on_submit():
+                instr = Instructor()
+                instr.first_name = form.first_name.data
+                instr.last_name = form.last_name.data
+                instr.email = form.email.data
+                instr.is_active = 1 if form.is_active.data else 0
+                instr.is_admin = 1 if form.is_admin.data else 0
+                instr.password_hash = generate_password_hash(secrets.token_urlsafe(20))
+                db.session.add(instr)
+                db.session.commit()
+                password_reset.new_user(instr)
+                return redirect('admin_panel')
+            else:
+                message = 'Enter a valid email address'
+    else:
+        return render_template('reset_message.html', title="Edit user", body="Not authenticated")
 
 """
     401 User not authenticated

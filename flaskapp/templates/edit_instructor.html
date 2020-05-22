@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block title %}Admin Panel{% endblock %}
+
+{% block zoom_wrapper %}
+<a class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3"
+    href="{{ link }}" target="_blank">Current Zoom Meeting</a>
+{% endblock %}
+
+{% block content %}
+
+<html>
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+
+<head>
+    <title>{{ title }}</title>
+</head>
+
+<body background-color="#EDF2F7">
+    <div style="min-height: 100%"
+        class="bg-gray-200 rounded-t-lg overflow-hidden border-t border-l border-r border-gray-400 p-4 px-3 py-10 flex justify-center">
+        <form class="w-full max-w-lg bg-white shadow-md px-8 py-6 mb-4" method="POST">
+            {{ form.csrf_token }}
+            <p class="text-2xl">{{ title }}</p> <br />
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <input name="id" type="hidden" id="id" value="{{ id }}"></input>
+                    {{ form.first_name.label(class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2')}}
+                    {{ form.first_name(class='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500')}}
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    {{ form.last_name.label(class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2')}}
+                    {{ form.last_name(class='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500')}}
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-3">
+                    {{ form.email.label(class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2')}}
+                    {{ form.email(class='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500')}}
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-2">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    {{ form.is_active.label(class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2')}}
+                    {% if is_active%}
+                    {{ form.is_active(default='checked')}}
+                    {% else %}
+                    {{ form.is_active()}}
+                    {% endif %}
+                </div>
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    {{ form.is_admin.label(class='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2')}}
+                    {% if is_admin %}
+                    {{ form.is_admin(default='checked')}}
+                    {% else %}
+                    {{ form.is_admin()}}
+                    {% endif %}
+                </div>
+            </div>
+            <!--
+            <div class="flex justify-center -mx-3 mb-6">
+                <button name="reset"
+                    class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                    Delete Instructor
+                </button>
+            </div>
+            -->
+            <div class="flex justify-center -mx-3 mb-2">
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/2 px-3">
+                        {{ form.submit(class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline')}}
+                    </div>
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <button name="cancel"
+                            class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+</body>
+{% endblock %}
