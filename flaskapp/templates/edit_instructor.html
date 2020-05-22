@@ -18,9 +18,11 @@
 <body background-color="#EDF2F7">
     <div style="min-height: 100%"
         class="bg-gray-200 rounded-t-lg overflow-hidden border-t border-l border-r border-gray-400 p-4 px-3 py-10 flex justify-center">
+        <div class="w-full max-w-lg">
         <form class="w-full max-w-lg bg-white shadow-md px-8 py-6 mb-4" method="POST">
             {{ form.csrf_token }}
             <p class="text-2xl">{{ title }}</p> <br />
+            <font color="red">{{ message }}</font>
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <input name="id" type="hidden" id="id" value="{{ id }}"></input>
