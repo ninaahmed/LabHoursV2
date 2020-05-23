@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+{% block title %}Stats{% endblock %}
+
+{% block zoom_wrapper %}
+<a class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3"
+    href="{{ link }}" target="_blank">Current Zoom Meeting</a>
+{% endblock %}
+
+{% block content %}
+
+<html>
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+
+<head>
+    <title>Stats</title>
+</head>
+
+<body background-color="#EDF2F7">
+    <div class="bg-gray-200">
+        <p class="text-5xl mx-auto px-4">Lab Hours Stats</p> <br />
+        <div class="flex justify-center pb-4">
+            <ul class="flex">
+                <li>
+                    {% if range == 'all' %}
+                    <a class="text-center block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white"
+                        href="{{ url_for('stats_page', range='all')}}">
+                        {% else %}
+                        <a class="text-center block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4"
+                            href="{{ url_for('stats_page', range='all')}}">
+                            {% endif %}
+
+                            All Time
+                        </a>
+                </li>
+                <li>
+                    {% if range == 'month' %}
+                    <a class="text-center block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white"
+                        href="{{ url_for('stats_page', range='month')}}">
+                        {% else %}
+                        <a class="text-center block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4"
+                            href="{{ url_for('stats_page', range='month')}}">
+                            {% endif %}
+                            Last Month
+                        </a>
+                </li>
+                <li>
+                    {% if range == 'week' %}
+                    <a class="text-center block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white"
+                        href="{{ url_for('stats_page', range='week')}}">
+                        {% else %}
+                        <a class="text-center block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4"
+                            href="{{ url_for('stats_page', range='week')}}">
+                            {% endif %}
+                            Last Week
+                        </a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 bg-gray-200 flex justify-center">
+
+            <div class="max-w-sm overflow-hidden">
+                <div class="flex justify-center ">
+                    <p class="text-5xl mx-auto">{{num_helped}}
+                </div>
+                <p class="text-xl mx-auto text-center">
+                    Students Helped
+                </p>
+            </div>
+            <div class="max-w-sm overflow-hidden">
+                <div class="flex justify-center ">
+                    <p class="text-5xl mx-auto">{{num_removed}}
+                </div>
+                <p class="text-xl mx-auto text-center">
+                    Students Removed
+                </p>
+            </div>
+            <div class="max-w-sm overflow-hidden">
+                <div class="flex justify-center ">
+                    <p class="text-5xl mx-auto">{{avg_wait}}
+                </div>
+                <p class="text-xl mx-auto text-center">Average Wait (HH:MM)
+                </p>
+            </div>
+        </div>
+        <!--
+                <div class="flex content-start">
+                    <p class="text-5xl mx-auto px-4" id="val1">
+                        {{num_helped}}
+                    </p>
+                    <p class="text-xl mx-auto px-4">Students Helped</p>
+                </div>
+            -->
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 bg-gray-200 flex justify-center pl-10">
+            {% for graph in graphs %}
+            <div>
+                {{graph|safe}}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+{% endblock %}

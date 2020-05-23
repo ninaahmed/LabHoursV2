@@ -1,4 +1,4 @@
-from flaskapp import app, notifier, db, queue_handler, routes_helper, password_reset, options_text, options_urls
+from flaskapp import app, notifier, db, queue_handler, routes_helper, password_reset, options_text, options_urls, stats
 from flask import render_template, flash, url_for, redirect, request, g
 from flaskapp.forms import EnterLineForm, LoginForm, RequestResetForm, ResetPasswordForm, InstructorForm
 from flaskapp.student import Student
@@ -276,6 +276,16 @@ def add_instructor():
                 message = 'Enter a valid email address'
     else:
         return render_template('reset_message.html', title="Edit user", body="Not authenticated")
+
+@app.route('/stats', methods=['GET', 'POST'])
+@login_required
+def stats_page():
+    if 'range' not in request.args:
+        range = "all"
+    else:
+        range = request.args['range']
+    return stats.generate_graphs(range)
+
 
 """
     401 User not authenticated

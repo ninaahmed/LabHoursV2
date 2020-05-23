@@ -4,3 +4,9 @@ python-dotenv
 flask_sqlalchemy
 flask_login
 validators
+pandas
+matplotlib
+numpy
+pytz
+mpld3
+

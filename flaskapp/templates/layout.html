@@ -27,14 +27,15 @@
           {% endblock %}
           <a class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" href="https://www.cs.utexas.edu/~scottm/cs314/labHours.htm" target="_blank">Lab Hour Times</a>
           {% if g.user.is_authenticated %}
-          <a style="float: right" class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" href=" {{ url_for('logout') }}">Logout</a>
-          {% if g.user.is_admin %}
-          <a style="float: right" class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" href= " {{ url_for('admin_panel') }}">Admin Panel</a>
-          {% endif %}
-          <a style="float: right" class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" href="{{ url_for('change_zoom') }}">Change Zoom Link</a>
-          <li style="float: right" class="py-1">Logged in as {{g.user.first_name}}</li>
+            <a style="float: right" class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" href=" {{ url_for('logout') }}">Logout</a>
+            {% if g.user.is_admin %}
+              <a style="float: right" class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" href= " {{ url_for('admin_panel') }}">Admin Panel</a>
+            {% endif %}
+            <a style="float: right" class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" href="{{ url_for('stats_page') }}">Stats</a>
+            <a style="float: right" class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" href="{{ url_for('change_zoom') }}">Change Zoom Link</a>
+            <li style="float: right" class="py-1">Logged in as {{g.user.first_name}}</li>
           {% else %}
-          <a class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" style="float: right" href="{{ url_for('login') }}">Instructor Login</a>
+            <a class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3" style="float: right" href="{{ url_for('login') }}">Instructor Login</a>
           {% endif %}
         </div>
       </ul>
