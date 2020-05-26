@@ -16,6 +16,9 @@ class Instructor(UserMixin, db.Model):
     last_name = db.Column(db.String(32))
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), unique=True, nullable=False)
+    is_active = db.Column(db.Integer)
+    is_admin = db.Column(db.Integer)
+    last_login = db.Column(db.DateTime)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

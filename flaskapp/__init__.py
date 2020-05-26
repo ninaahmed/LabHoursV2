@@ -2,13 +2,19 @@ from flask import Flask, g
 from flaskapp.notifications import Notifier
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 
 db = SQLAlchemy(app)
-
 login = LoginManager(app)
+
+# If database does not exist (especially instructors table!), we have problems
+# from flaskapp.models.instructor import *
+# from flaskapp.models.visit import *
+# db.create_all()
+# db.session.commit()
 
 # Create an Email Notifications object to use throughout lifetime of program
 notifier = Notifier(app.config['EMAIL_ACCOUNT'], app.config['EMAIL_PASSWORD'], app.config['EMAIL_SERVER'], app.config['EMAIL_SERVER_PORT'])
@@ -48,5 +54,14 @@ except Exception as e:
     print(f"Failed to initialize zoom links. Malformed or missing file: {app.config['ZOOM_LINKS_FILE']}")
     print(e)
     exit(1)
+
+# Create a Debug admin account
+# debug_admin = Instructor(first_name="Debug", last_name="User",
+#     email=app.config['DEBUG_ADMIN_EMAIL'],
+#     password_hash=generate_password_hash(app.config['DEBUG_ADMIN_PASSWORD']),
+#     is_active = 1, is_admin = 1)
+
+# db.session.add(debug_admin)
+# db.session.commit()
 
 from flaskapp import routes
