@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+{% block title %}Admin Panel{% endblock %}
+
+{% block zoom_wrapper %}
+<a class="inline-block border border-white rounded hover:border-gray-200 text-blue-700 hover:bg-gray-200 py-1 px-3"
+    href="{{ link }}" target="_blank">Current Zoom Meeting</a>
+{% endblock %}
+
+{% block content %}
+
+<html>
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+
+<head>
+    <title>Admin Panel</title>
+</head>
+
+<body background-color="#EDF2F7">
+    <div style="min-height: 100%"
+        class="rounded-t-lg overflow-hidden border-t border-l border-r border-gray-400 p-4 px-3 py-10 bg-gray-200 flex justify-center">
+        <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+            <p class="text-3xl mx-auto">
+                Instructors
+            </p>
+            <div class="min-w-full flex justify-center">
+                <div class="align-middle inline-block shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                    <table class="max-w-6xl">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    Name
+                                </th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    E-mail
+                                </th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    Privileges
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 max-w-lg"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            {% for instructor in instructors %}
+                            <tr>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <div class="flex items-center">
+                                        <div class="text-sm leading-5 font-medium text-gray-900">
+                                            {{ instructor.first_name }}
+                                            {{ instructor.last_name }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <div class="text-sm leading-5 text-gray-900">
+                                        {{ instructor.email }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    {% if instructor.is_active %}
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        Active
+                                    </span>
+                                    {% else %}
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                        Inactive
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    {% if instructor.is_admin %}
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        Admin
+                                    </span>
+                                    {% else %}
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                        Not Admin
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td
+                                    class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium max-w-lg">
+                                    <a href=" {{ url_for('edit_instructor', id=instructor.id) }}"
+                                        class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="py-4">
+            <a class="-my-8 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-green-700 rounded" href="{{url_for('add_instructor')}}">
+                Create Instructor
+            </a>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
