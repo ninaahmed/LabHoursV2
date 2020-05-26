@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt, mpld3
 from datetime import datetime, timedelta
 import numpy as np
+import math
 from pytz import timezone
 from flaskapp import db, app
 from flaskapp.models.visit import Visit
@@ -9,6 +10,8 @@ from flaskapp.models.instructor import Instructor
 from flask import render_template
 import csv
 import os
+
+pd.options.mode.chained_assignment = None
 
 def export_csv():
     file_name = app.config['STATS_FILE']
@@ -43,17 +46,15 @@ def renameInstructor(id):
         return "None"
 
 def generate_graphs(range):
-    '''
     if not export_csv():
-        print("uh oh")
+        print("Failed to export to CSV")
         return render_template('reset_message', title="Error Occurred", body='An error occurred when trying to collect statistics for this class.')
-    '''
 
     # open file, conversions
     raw = pd.read_csv(app.config['STATS_FILE'])
-    raw['when_entered'] = pd.to_datetime(raw['when_entered'])
-    raw['when_left'] = pd.to_datetime(raw['when_left'])
-    raw['id'] = raw['id'] - 1
+    raw.loc[:, 'when_entered'] = pd.to_datetime(raw['when_entered'])
+    raw.loc[:, 'when_left'] = pd.to_datetime(raw['when_left'])
+    raw.loc[:, 'id'] = raw['id'] - 1
 
     # filtered == only those who were helped
     filtered = raw[raw['when_left'].notna()]
@@ -66,8 +67,8 @@ def generate_graphs(range):
     tzoffset = tz.utcoffset(now)
 
     # apply correct tz offset
-    filtered['when_entered'] = filtered['when_entered'].apply(lambda x: x + tzoffset)
-    filtered['when_left'] = filtered['when_left'].apply(lambda x: x + tzoffset)
+    filtered.loc[:, 'when_entered'] = filtered['when_entered'].apply(lambda x: x + tzoffset)
+    filtered.loc[:, 'when_left'] = filtered['when_left'].apply(lambda x: x + tzoffset)
     
     # calculate time in line
     time_in_line = (filtered['when_left'] - filtered['when_entered'])
@@ -82,7 +83,7 @@ def generate_graphs(range):
     filtered.insert(6, "date", date)
     weekday = filtered['when_entered'].apply(lambda x: x.weekday())
     filtered.insert(7, "weekday", weekday)
-    filtered["weekday"] = filtered["weekday"].apply(renameWeekday)
+    filtered.loc[:, "weekday"] = filtered["weekday"].apply(renameWeekday)
     min_in_line = filtered['time_in_line'].apply(lambda x: int(x.total_seconds() / 60))
     filtered.insert(4, "min_in_line", min_in_line)
 
@@ -96,7 +97,7 @@ def generate_graphs(range):
     graphs = []
 
     helped = filtered[filtered['was_helped'] == 1]
-    helped['instructor_id'] = helped['instructor_id'].apply(renameInstructor)
+    helped.loc[:,'instructor_id'] = helped['instructor_id'].map(renameInstructor)
     helped_last_week = helped[helped['date'] >= week_prior]
     helped_last_month = helped[helped['date'] >= month_prior]
 
@@ -132,10 +133,14 @@ def generate_graphs(range):
         num_removed = len(removed_last_week)
         avg_wait = helped_last_week['min_in_line'].mean()
 
-    avg_hr = int(avg_wait // 60)
-    avg_hr = str(avg_hr).zfill(2)
-    avg_min = int(avg_wait % 60)
-    avg_min = str(avg_min).zfill(2)
+    if math.isnan(avg_wait):
+        avg_hr = '--'
+        avg_min = '--'
+    else:
+        avg_hr = int(avg_wait // 60)
+        avg_hr = str(avg_hr).zfill(2)
+        avg_min = int(avg_wait % 60)
+        avg_min = str(avg_min).zfill(2)
     avg_wait = avg_hr + ":" + avg_min
 
     return render_template('stats_page.html', graphs=graphs, range=range, avg_wait=avg_wait, num_helped=num_helped, num_removed=num_removed)
