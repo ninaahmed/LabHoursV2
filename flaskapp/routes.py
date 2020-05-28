@@ -284,7 +284,7 @@ def stats_page():
         range = "all"
     else:
         range = request.args['range']
-    return stats.generate_graphs(range)
+    return stats.get_graphs(range)
 
 
 """

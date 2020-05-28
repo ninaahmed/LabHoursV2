@@ -13,6 +13,8 @@ import os
 
 pd.options.mode.chained_assignment = None
 
+graph_dict = {}
+
 def export_csv():
     file_name = app.config['STATS_FILE']
     if os.path.exists(file_name):
@@ -35,7 +37,7 @@ def export_csv():
 
 
 def renameWeekday(index):
-    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
     return days[index]
 
 def renameInstructor(id):
@@ -44,6 +46,25 @@ def renameInstructor(id):
         return instr.first_name
     else:
         return "None"
+
+def get_graphs(range):
+    stale_interval = timedelta(hours=1)
+    if range in graph_dict:
+        (time_generated, list, avg_wait, num_helped, num_removed) = graph_dict[range]
+        tz = timezone('US/Central')
+        now = datetime.utcnow()
+        tzoffset = tz.utcoffset(now)
+        now = now + tzoffset
+        time_elapsed  = now - time_generated
+        if time_elapsed > stale_interval:
+            (graphs, avg_wait, num_helped, num_removed) = generate_graphs(range)
+        else:
+            graphs = list
+    else:
+        (graphs, avg_wait, num_helped, num_removed) = generate_graphs(range)
+        (time_generated, list, avg_wait, num_helped, num_removed) = graph_dict[range]
+    
+    return render_template('stats_page.html', graphs=graphs, range=range, avg_wait=avg_wait, num_helped=num_helped, num_removed=num_removed, time_generated=time_generated)
 
 def generate_graphs(range):
     if not export_csv():
@@ -143,7 +164,9 @@ def generate_graphs(range):
         avg_min = str(avg_min).zfill(2)
     avg_wait = avg_hr + ":" + avg_min
 
-    return render_template('stats_page.html', graphs=graphs, range=range, avg_wait=avg_wait, num_helped=num_helped, num_removed=num_removed)
+    global graph_dict
+    graph_dict[range] = (now + tzoffset, graphs, avg_wait, num_helped, num_removed)
+    return (graphs, avg_wait, num_helped, num_removed)
 
 
 
@@ -156,17 +179,22 @@ def plot_time_waiting(graphs, data, title, bins):
     plt.xlabel("Time waiting in line (min)")
     plt.ylabel("Num. of occurrences")
     graphs.append(mpld3.fig_to_html(fig, template_type="general"))
+    plt.close()
 
 def plot_waiting_per_day(graphs, data, title):
-    indexing = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    indexing = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
     plt.style.use('seaborn')
     fig = plt.figure(figsize=(5,5))
     days = data.weekday.value_counts()
-    days = days.reindex(indexing, fill_value = 0).plot.bar(color="#4C72B0")
+    days = days.reindex(indexing, fill_value = 0)
+    plt.bar(x=days.index, height=days.values, tick_label = indexing, width = .5)
     plt.title(title)
     plt.xlabel("Day of week")
     plt.ylabel("Num. of occurrences")
+    # days.set_xlabel("Day of week")
+    # days.set_ylabel("Num. of occurrences")
     graphs.append(mpld3.fig_to_html(fig))
+    plt.close()
 
 def plot_helped_per_TA(graphs, data, title):
     TAs = data['instructor_id']
@@ -177,5 +205,9 @@ def plot_helped_per_TA(graphs, data, title):
     plt.ylabel("Num. of students helped")
     counts = TAs.value_counts()
     if(len(counts) > 0):
-        counts.plot(kind='bar', color="#4C72B0")
+        plt.bar(x=counts.index, height = counts.values, tick_label = counts.index, width = .5)
     graphs.append(mpld3.fig_to_html(fig))
+    plt.close()
+
+
+    
