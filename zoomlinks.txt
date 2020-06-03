@@ -4,3 +4,33 @@
 # contain all of the regularly-scheduled Zoom meetings
 # for lab hours throughout the week
 #
+
+Monday 9:00-11:00
+https://utexas.zoom.us/j/94741856543
+
+Monday 14:00-21:00
+https://utexas.zoom.us/j/97163490852
+
+Tuesday 8:00-9:00
+https://utexas.zoom.us/j/97192034458
+
+Tuesday 10:00-12:00
+https://utexas.zoom.us/j/93024204540
+
+Tuesday 14:00-18:00
+https://utexas.zoom.us/j/94521224492
+
+Wednesday 8:00-11:00
+https://utexas.zoom.us/j/97285383903
+
+Wednesday 14:00-18:00
+https://utexas.zoom.us/j/99648837924
+
+Thursday 8:00-11:00
+https://utexas.zoom.us/j/96660678613
+
+Thursday 14:00-21:00
+https://utexas.zoom.us/j/91144960599
+
+Friday 8:00-11:00
+https://utexas.zoom.us/j/97634487750
