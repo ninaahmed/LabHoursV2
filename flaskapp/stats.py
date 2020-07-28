@@ -21,12 +21,11 @@ def export_csv():
         os.remove(file_name)
     try:
         output_file = open(file_name, 'w')
-        outcsv = csv.writer(output_file, quotechar=',')
-        # outcsv.writerow(['id', 'eid', 'time_entered', 'time_left', 'was_helped', 'instructor_id'])
-        outcsv.writerow(['id', 'eid', 'when_entered', 'when_left', 'was_helped', 'instructor_id'])
+        out_csv = csv.writer(output_file, quotechar=',')
+        out_csv.writerow(['id', 'eid', 'when_entered', 'when_left', 'was_helped', 'instructor_id'])
         visits = Visit.query.all()
         for visit in visits:
-            outcsv.writerow([visit.id, visit.eid, visit.time_entered, visit.time_left, visit.was_helped, visit.instructor_id])
+            out_csv.writerow([visit.id, visit.eid, visit.time_entered, visit.time_left, visit.was_helped, visit.instructor_id])
         output_file.close()
         return True
         #print("Export successful")
@@ -153,7 +152,8 @@ def generate_graphs(range):
         num_helped = len(helped_last_week)
         num_removed = len(removed_last_week)
         avg_wait = helped_last_week['min_in_line'].mean()
-
+    
+    # incase none in time period x, will avoid funky text display.
     if math.isnan(avg_wait):
         avg_hr = '--'
         avg_min = '--'

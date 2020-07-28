@@ -1,6 +1,6 @@
 # Lab Hours Queue Project Overview
 
-For instructions on how to run the application with a development server, see the instructions in `running.md`.
+For instructions on how to run the application with a development server, see the instructions in `setup/README.md`.
 
 ## Source Files
 
@@ -21,6 +21,8 @@ Connections with the database were handled using the `flask_sqlalchemy` library.
 * `student.py` - Contains a class to represent a Student in the queue.
 * `forms.py` - Contains WTForm Form objects for the various forms on the site that need to be verified.
 * `notifications.py` - Handles sending email notifications.
+* `password_reset.py` - Handles password resetting behavior.
+* `stats.py` - Generates csv files from database and generates various graphs.
 * `models/instructor.py` - Provides a database model for a row in the instructor table.
 * `models/visit.py` - Provides a database model for a row in the visit table.
 

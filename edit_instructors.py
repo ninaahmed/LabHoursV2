@@ -15,18 +15,26 @@ from werkzeug.security import generate_password_hash
 """
 
 def display_menu():
+
+    ADD_ENTRY = 1
+    MODIFY_ENTRY = 2
+    DELETE_ENTRY = 3
+    LIST_ALL_ENTRIES = 4
+    SAVE_EXIT = 5
+    NO_SAVE_EXIT = 6
+
     choice = 0
-    while choice != 5 and choice != 6:
-        if choice == 1:
+    while choice != SAVE_EXIT and choice != NO_SAVE_EXIT:
+        if choice == ADD_ENTRY:
             new_instructor()
             choice = 0
-        elif choice == 2:
+        elif choice == MODIFY_ENTRY:
             modify_instructor()
             choice = 0
-        elif choice == 3:
+        elif choice == DELETE_ENTRY:
             delete_instructor()
             choice = 0
-        elif choice == 4:
+        elif choice == LIST_ALL_ENTRIES:
             list_instructors()
             choice = 0
         else:
@@ -39,7 +47,7 @@ def display_menu():
             print("5. Write changes and exit")
             print("6. Exit without writing")
             choice = int(input("Select an option: "))
-    if choice == 5:
+    if choice == SAVE_EXIT:
         db.session.commit()
     exit()
 
