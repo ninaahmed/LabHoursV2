@@ -267,7 +267,8 @@ def add_instructor():
                 instr.email = form.email.data
                 instr.is_active = 1 if form.is_active.data else 0
                 instr.is_admin = 1 if form.is_admin.data else 0
-                instr.password_hash = generate_password_hash(secrets.token_urlsafe(20))
+                TOKEN_NUM_BYTES = 20
+                instr.password_hash = generate_password_hash(secrets.token_urlsafe(TOKEN_NUM_BYTES))
                 db.session.add(instr)
                 db.session.commit()
                 password_reset.new_user(instr)

@@ -12,16 +12,23 @@ import os
     and database.
 """
 def display_menu():
+
+    VIEW_NUM_ENTRIES = 1
+    EXPORT_CSV = 2
+    DELETE_ALL = 3
+    SAVE_EXIT = 4
+    NO_SAVE_EXIT = 5
+
     choice = 0
-    while choice != 4 and choice != 5:
-        if choice == 1:
+    while choice != SAVE_EXIT and choice != NO_SAVE_EXIT:
+        if choice == VIEW_NUM_ENTRIES:
             num_entries = len(Visit.query.all())
             print(f"There are {num_entries} entries in the visits table.")
             choice = 0 
-        elif choice == 2:
+        elif choice == EXPORT_CSV:
             export_csv()
             choice = 0
-        elif choice == 3:
+        elif choice == DELETE_ALL:
             all_visits = Visit.query.all()
             num_entries = len(all_visits)
             print(f"Are you sure you want to delete all {num_entries} entries in the visits table?")
@@ -32,13 +39,13 @@ def display_menu():
         else:
             print_divide()
             print("Visits table editor")
-            print("1: View number of entries in visits table")
-            print("2: Export to CSV")
-            print("3: Delete all entries in visits table")
-            print("4: Write changes to database and exit")
-            print("5: Exit without writing to database")
+            print(f"{VIEW_NUM_ENTRIES}: View number of entries in visits table")
+            print(f"{EXPORT_CSV}: Export to CSV")
+            print(f"{DELETE_ALL}: Delete all entries in visits table")
+            print(f"{SAVE_EXIT}: Write changes to database and exit")
+            print(f"{NO_SAVE_EXIT}: Exit without writing to database")
             choice = int(input("Select an option: "))
-    if choice == 4:
+    if choice == SAVE_EXIT:
         db.session.commit()
     exit()
 
