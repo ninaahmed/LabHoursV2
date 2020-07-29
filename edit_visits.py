@@ -39,11 +39,11 @@ def display_menu():
         else:
             print_divide()
             print("Visits table editor")
-            print("1: View number of entries in visits table")
-            print("2: Export to CSV")
-            print("3: Delete all entries in visits table")
-            print("4: Write changes to database and exit")
-            print("5: Exit without writing to database")
+            print(f"{VIEW_NUM_ENTRIES}: View number of entries in visits table")
+            print(f"{EXPORT_CSV}: Export to CSV")
+            print(f"{DELETE_ALL}: Delete all entries in visits table")
+            print(f"{SAVE_EXIT}: Write changes to database and exit")
+            print(f"{NO_SAVE_EXIT}: Exit without writing to database")
             choice = int(input("Select an option: "))
     if choice == SAVE_EXIT:
         db.session.commit()

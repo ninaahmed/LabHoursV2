@@ -40,12 +40,12 @@ def display_menu():
         else:
             print_divide()
             print("Instructor table editor")
-            print("1. Add a new instructor entry")
-            print("2. Modify an instructor entry")
-            print("3. Delete an instructor entry")
-            print("4. List all instructor entries")
-            print("5. Write changes and exit")
-            print("6. Exit without writing")
+            print(f"{ADD_ENTRY}: Add a new instructor entry")
+            print(f"{MODIFY_ENTRY}: Modify an instructor entry")
+            print(f"{DELETE_ENTRY}: Delete an instructor entry")
+            print(f"{LIST_ALL_ENTRIES}: List all instructor entries")
+            print(f"{SAVE_EXIT}: Write changes and exit")
+            print(f"{NO_SAVE_EXIT}: Exit without writing")
             choice = int(input("Select an option: "))
     if choice == SAVE_EXIT:
         db.session.commit()
