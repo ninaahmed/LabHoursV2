@@ -5,30 +5,32 @@
 # for lab hours throughout the week
 #
 
-Monday 10am
-https://utexas.zoom.us/j/623121653
-Monday 2pm
-https://utexas.zoom.us/j/173619565
-Monday 3pm
-https://utexas.zoom.us/j/988480904
+Monday 9:00-11:00
+https://utexas.zoom.us/j/94741856543
 
+Monday 14:00-21:00
+https://utexas.zoom.us/j/97163490852
 
-Tuesday 11am
-https://utexas.zoom.us/j/851811817
-Tuesday 2pm
-https://utexas.zoom.us/j/195098973
-Tuesday 4pm
-https://utexas.zoom.us/j/929353620
+Tuesday 8:00-9:00
+https://utexas.zoom.us/j/97192034458
 
-Wednesday 10am
-https://utexas.zoom.us/j/922331555
-Wednesday 1pm
-https://utexas.zoom.us/j/676797320
+Tuesday 10:00-12:00
+https://utexas.zoom.us/j/93024204540
 
-Thursday 11am
-https://utexas.zoom.us/j/851811817
+Tuesday 14:00-18:00
+https://utexas.zoom.us/j/94521224492
 
-Friday 11am
-https://utexas.zoom.us/j/840932984
-Friday 2pm
-https://utexas.zoom.us/j/711071482
+Wednesday 8:00-11:00
+https://utexas.zoom.us/j/97285383903
+
+Wednesday 14:00-18:00
+https://utexas.zoom.us/j/99648837924
+
+Thursday 8:00-11:00
+https://utexas.zoom.us/j/96660678613
+
+Thursday 14:00-21:00
+https://utexas.zoom.us/j/91144960599
+
+Friday 8:00-11:00
+https://utexas.zoom.us/j/97634487750
